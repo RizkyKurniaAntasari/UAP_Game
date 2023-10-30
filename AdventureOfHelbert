@@ -41,15 +41,16 @@ void global(){
             Sleep(90);
             cout << "\033[34m" << x << "\033[0m";}
         
-}// Global Loading
+}
 
+// In - Game
 void startgame(){
     system("cls");
     cout << "game started !";
 
 }
 
-//Menu login dengan Boolean
+//Menu login with Boolean
 void login(){
         cout << " \033[1m Menu Login \033[0m" << endl;
         cout << "enter user-id: ";
@@ -67,22 +68,16 @@ void login(){
         }
         if(!found)
         {   
-            name.clear();password = int();
             system("cls");
-            cout << "Wrong Password or User-ID !" << endl;
+            name.clear();password = int();
+            cout << "\033[31m"<< "Wrong Password or User-ID !" << "\033[0m"<< endl;
             login();
         }
         }//startgame();
 
 }
 
-void load_Register(){
-    char x = 219;
-    for(int i=0;i<=29;i++){
-        Sleep(90);
-        cout << "\033[34m" << x << "\033[0m";
-    }
-}
+// Registration
 void Register(){
     system("cls");
    while(true){
@@ -107,42 +102,43 @@ void Register(){
          }
     }
     cout << endl << "Account has been created ! " << endl;
-    load_Register(); cout << endl;
+    global(); cout << endl;
     system("cls");
     login();
 }
 
-
+// Main Menu
 void mainMenu(){
     system("cls");
-
-    cout << "\033[1m                                         A  D  V  E  N  T  U  R  E\n\033[0m" << endl;
-       cout << "*************************************************************************" << endl;
-   cout << "*  _____ _               _       _                 _                    *" << endl;
-   cout << "* |_   _| |__   ___     / \\   __| |_   _____ _ __ | |_ _   _ _ __ ___   *" << endl;
-   cout << "*   | | | '_ \\ / _ \\   / _ \\ / _` \\ \\ / / _ \\ '_ \\| __| | | | '__/ _ \\  *" << endl;
-   cout << "*   | | | | | |  __/  / ___ \\ (_| |\\ V /  __/ | | | |_| |_| | | |  __/  *" << endl;
-   cout << "*   |_| |_| |_|\\___| /_/   \\_\\__,_| \\_/ \\___|_| |_|\\__|\\__,_|_|  \\___|  *" << endl;
-   cout << "*                                                                       *" << endl;
-   cout << "*                    __   _   _       _ _               _               *" << endl;
-   cout << "*              ___  / _| | | | | __ _| | |__   ___ _ __| |_             *" << endl;
-   cout << "*             / _ \\| |_  | |_| |/ _` | | '_ \\ / _ \\ '__| __|            *" << endl;
-   cout << "*            | (_) |  _| |  _  | (_| | | |_) |  __/ |  | |_             *" << endl;
-   cout << "*             \\___/|_|   |_| |_|\\__,_|_|_.__/ \\___|_|   \\__|            *" << endl; 
-   cout << "*                                                                       *" << endl;
-   cout << "*************************************************************************" << endl;
-    cout << "Selamat datang, " << username << " !\n\n";
-    cout << "1. Login\n" << "2. Register\n" <<"3. Exit\n\n";
-    cout << " your choise : ";
+             cout << endl;
+gotoxy(31,4);cout << "*************************************************************************" << endl;
+gotoxy(31,5);cout << "*  _____ _               _       _                 _                    *" << endl;
+gotoxy(31,6);cout << "* |_   _| |__   ___     / \\   __| |_   _____ _ __ | |_ _   _ _ __ ___   *" << endl;
+gotoxy(31,7);cout << "*   | | | '_ \\ / _ \\   / _ \\ / _` \\ \\ / / _ \\ '_ \\| __| | | | '__/ _ \\  *" << endl;
+gotoxy(31,8);cout << "*   | | | | | |  __/  / ___ \\ (_| |\\ V /  __/ | | | |_| |_| | | |  __/  *" << endl;
+gotoxy(31,9);cout << "*   |_| |_| |_|\\___| /_/   \\_\\__,_| \\_/ \\___|_| |_|\\__|\\__,_|_|  \\___|  *" << endl;
+gotoxy(31,10);cout << "*                                                                       *" << endl;
+gotoxy(31,11);cout << "*                    __   _   _       _ _               _               *" << endl;
+gotoxy(31,12);cout << "*              ___  / _| | | | | __ _| | |__   ___ _ __| |_             *" << endl;
+gotoxy(31,13);cout << "*             / _ \\| |_  | |_| |/ _` | | '_ \\ / _ \\ '__| __|            *" << endl;
+gotoxy(31,14);cout << "*            | (_) |  _| |  _  | (_| | | |_) |  __/ |  | |_             *" << endl;
+gotoxy(31,15);cout << "*             \\___/|_|   |_| |_|\\__,_|_|_.__/ \\___|_|   \\__|            *" << endl; 
+gotoxy(31,16);cout << "*                                                                       *" << endl;
+gotoxy(31,17);cout << "*************************************************************************" << endl;
+gotoxy(31,18);cout << "Selamat datang, " << username << " !\n\n";
+gotoxy(31,19);cout << "1. Login\n";
+gotoxy(31,20);cout << "2. Register\n";
+gotoxy(31,21);cout << "3. Exit\n\n";
+gotoxy(31,23);cout << " your choise : ";
     cin >> option;
 
     switch(option){
         case '1' :
-            startgame();
+            login();
             break;
         case '2' :
             Register();
-            return;
+        //  return;
             break;
         case '3' : 
             return;
@@ -171,6 +167,7 @@ void opening(){
 }
 
 int main(){
+
     system("color 02");
     opening();
 
