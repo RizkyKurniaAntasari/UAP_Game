@@ -1,0 +1,177 @@
+/*  copy GAME UTP DDP     
+    NAMA KELOMPOK : NPM
+    BUNGARAN NATANAEL SIAHAAN : 2317051048
+    DEA DELVINATA             : 2317051027
+    RIZKY KURNIA ANTASARI     : 2357051011
+*/
+#include <bits/stdc++.h> 
+#include <string>
+#include <chrono>
+#include <thread>
+#include <time.h>
+#include <windows.h>
+using namespace std;
+
+//POSITIONING 
+int X, Y;
+COORD coord = {X=0, Y=0};
+
+void gotoxy(int x, int y) {
+  coord.X = x;
+  coord.Y = y;
+  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+// DEKLARASI 
+    string username;
+    string name;
+    string user[10]={""};
+
+    int pass[10]={0};int password;
+    int pemberhentian=0;int i=0,j=0;
+
+    char option;char jawaban;
+
+    bool found = false;
+
+// Global Loading
+void global(){
+    char x = 219;
+            for(int i=0;i<=29;i++){
+            Sleep(90);
+            cout << "\033[34m" << x << "\033[0m";}
+        
+}// Global Loading
+
+void startgame(){
+    system("cls");
+    cout << "game started !";
+
+}
+
+//Menu login dengan Boolean
+void login(){
+        cout << " \033[1m Menu Login \033[0m" << endl;
+        cout << "enter user-id: ";
+        cin >> name;
+        cout << "enter password : ";
+        cin >> password;
+        cout << endl;
+        for(int a=0;a<10;a++){
+        if(name == user[a] && password == pass[a])
+        {   
+            global();
+            startgame();
+            found = true;
+            break;
+        }
+        if(!found)
+        {   
+            name.clear();password = int();
+            system("cls");
+            cout << "Wrong Password or User-ID !" << endl;
+            login();
+        }
+        }//startgame();
+
+}
+
+void load_Register(){
+    char x = 219;
+    for(int i=0;i<=29;i++){
+        Sleep(90);
+        cout << "\033[34m" << x << "\033[0m";
+    }
+}
+void Register(){
+    system("cls");
+   while(true){
+
+        if(pemberhentian == 1){
+            break;
+        }
+        cout << "enter new user-id: ";
+        cin >> user[i];
+        i++;
+        cout << "enter new password : ";
+        cin >> pass[j];
+        j++;
+        cout << "Create Account (y/n) : ";
+        cin >> jawaban;
+        if(jawaban == 'y'){
+        pemberhentian+=1;
+         }else{
+            i = i - i;
+            j = j - j;
+            system("cls");
+         }
+    }
+    cout << endl << "Account has been created ! " << endl;
+    load_Register(); cout << endl;
+    system("cls");
+    login();
+}
+
+
+void mainMenu(){
+    system("cls");
+    cout << "\033[1m                                         A  D  V  E  N  T  U  R  E\n\033[0m" << endl;
+   cout << "*************************************************************************" << endl;
+   cout << "*  _____ _               _       _                 _                    *" << endl;
+   cout << "* |_   | |_   ___     / \\   _| |   _____ _ __ | |_ _   _ _ __ ___   *" << endl;
+   cout << "*   | | | '_ \\ / _ \\   / _ \\ / ` \\ \\ / / _ \\ ' \\| __| | | | '__/ _ \\  *" << endl;
+   cout << "*   | | | | | |  __/  / ___ \\ (_| |\\ V /  __/ | | | |_| |_| | | |  __/  *" << endl;
+   cout << "*   |_| |_| |_|\\___| /_/   \\_\\__,_| \\_/ \\___|_| |_|\\__|\\__,_|_|  \\___|  *" << endl;
+   cout << "*                                                                       *" << endl;
+   cout << "*                    __   _   _       _ _               _               *" << endl;
+   cout << "*              ___  / | | | | | __ _| | |_   ___ _ _| |             *" << endl;
+   cout << "*             / _ \\| |_  | || |/ _` | | ' \\ / _ \\ '__| __|            *" << endl;
+   cout << "*            | () |  _| |  _  | (_| | | |_) |  __/ |  | |             *" << endl;
+   cout << "*             \\___/|_|   |_| |_|\\__,_|_|_.__/ \\___|_|   \\__|            *" << endl; 
+   cout << "*                                                                       *" << endl;
+   cout << "*************************************************************************" << endl;
+    cout << "Selamat datang, " << username << " !\n\n";
+    cout << "1. Login\n" << "2. Register\n" <<"3. Exit\n\n";
+    cout << " your choise : ";
+    cin >> option;
+
+    switch(option){
+        case '1' :
+            startgame();
+            break;
+        case '2' :
+            Register();
+            return;
+            break;
+        case '3' : 
+            return;
+            break;
+        default:
+            mainMenu();
+    }
+}
+
+void Loading(){
+    char x = 219;
+    for(int i=0;i<=27;i++){
+        Sleep(90);
+        cout << x;
+    }
+    system("cls");
+    //system("pause"); // press any key to continue
+    mainMenu();
+}
+
+void opening(){
+//  cout << " Selamat datang di game advanture !\n\n ";
+    cout << " Insert your name : ";
+    getline(cin,username);
+    Loading();
+}
+
+int main(){
+    system("color 02");
+    opening();
+
+return 0;
+}
