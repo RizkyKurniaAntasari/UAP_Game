@@ -1,4 +1,4 @@
-/*  ini pepek 
+/*  
     NAMA KELOMPOK : NPM
     BUNGARAN NATANAEL SIAHAAN : 2317051048
     DEA DELVINATA             : 2317051027
@@ -227,8 +227,8 @@ in_game:
     switch(todo){
         case '1':
             system("cls");
+            goto weapon;
             todo = '\0';
-            goto train;
             break;
         case '2':
             system("cls");
@@ -238,8 +238,8 @@ in_game:
         case '3':
             system("cls");
             cout <<"kasus 3";
-            todo = '\0';
             //goto shop;
+            todo = '\0';
             break;
     }
 
@@ -250,8 +250,9 @@ game:
 
     if (timeExplore <= 56 && timeExplore >= 49) { // Stamina
         gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
+        int earn =0;earn=earn+(20*(int)(timeExplore-48));  // buat nampilihn hasil gold yang diperoleh
         global();cout << endl;
-        cout << "Congratulation ! You have earned " << gold << " gold ! " << endl << endl;
+        cout << "Congratulation ! You have earned " << earn << " gold ! " << endl << endl;
         //goto weapon;
         goto in_game;
     }
@@ -265,14 +266,29 @@ game:
         goto game;
     }
 
-weapon:
+// if gold is not enough
+invalid:
     system("cls");
-    // cout << endl << "Your current gold : " << gold;
-    // cout << endl << "Your current sword : " << SwordLevel << endl;
-    // cout << "Would you like to upgrade your weapon (y/n) :";
-    // cin >> up;
+    cout << "\033[31m Your gold is not Enough !\033[0m";
+    goto weapon;
 
-    if(true){
+weapon:
+    cout << endl << "Your current gold : " << gold;
+    cout << endl << "Your current sword : " << SwordLevel << endl;
+    cout << "Would you like to upgrade your (y/n) :";
+    // health /potion, defense, pedang
+    // switch(){ // equipment
+    //     case '1':
+    //         //goto health;
+    //         break;
+    //     case '2':
+    //         //goto defense
+    //         break;
+    //     case '3';
+    //         //goto sword
+    //         break;
+    // }
+    cin >> up; // items ada 
 
     if (up == 'y') {
         cout << endl << "Your current gold : " << gold;
@@ -287,12 +303,15 @@ weapon:
             SwordCost1 += 60;
             goto weapon;
         }
+        else if(gold <= SwordCost1 && sword == 'y'){
+            goto invalid;
+        }
         else if (sword == 'n') {
             system("cls");
-            kembali = false;
+            goto in_game;
         }
         else{
-            goto weapon;
+            goto in_game;
         }
     cout << endl << "Current gold : " << gold << " " << "Current Sword Level : " << SwordLevel << endl; 
     goto weapon;
@@ -301,10 +320,7 @@ weapon:
         system("cls");
         goto in_game;
     }
-    }
-
-train:
-    cout << "axsca";
+    goto in_game;
 
 return 0;
 }
