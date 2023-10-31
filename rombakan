@@ -217,24 +217,28 @@ int main(){
     opening();
 
 in_game:
-   system("cls");
     cout << "Hello ! Good Morning, " << username << endl;
     cout << "What would like you in this morning ?" << endl;
-    cout << "1. Train" << endl;
+    cout << "1. Train" << endl; //sword level == train ==weapon
     cout << "2. Explore" << endl;
     cout << "3. Shop" << endl;
     cin >> todo;
-
+    
     switch(todo){
         case '1':
             system("cls");
-           //goto train;
+            todo = '\0';
+            goto train;
             break;
         case '2':
+            system("cls");
             goto game;
+            todo = '\0';
             break;
         case '3':
+            system("cls");
             cout <<"kasus 3";
+            todo = '\0';
             //goto shop;
             break;
     }
@@ -246,8 +250,10 @@ game:
 
     if (timeExplore <= 56 && timeExplore >= 49) { // Stamina
         gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
-        cout << "You earned " << gold << " gold ! " << endl << endl;
-        goto weapon;
+        global();cout << endl;
+        cout << "Congratulation ! You have earned " << gold << " gold ! " << endl << endl;
+        //goto weapon;
+        goto in_game;
     }
     else if(timeExplore > 56 && timeExplore < 49){
         system("cls");
@@ -261,10 +267,12 @@ game:
 
 weapon:
     system("cls");
-    cout << endl << "Your current gold : " << gold;
-    cout << endl << "Your current sword : " << SwordLevel << endl;
-    cout << "Would you like to upgrade your weapon (y/n) :";
-    cin >> up;
+    // cout << endl << "Your current gold : " << gold;
+    // cout << endl << "Your current sword : " << SwordLevel << endl;
+    // cout << "Would you like to upgrade your weapon (y/n) :";
+    // cin >> up;
+
+    if(true){
 
     if (up == 'y') {
         cout << endl << "Your current gold : " << gold;
@@ -293,8 +301,10 @@ weapon:
         system("cls");
         goto in_game;
     }
-    
+    }
 
+train:
+    cout << "axsca";
 
 return 0;
 }
