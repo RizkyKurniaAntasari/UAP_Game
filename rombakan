@@ -1,4 +1,4 @@
-/*  
+/*  ini pepek 
     NAMA KELOMPOK : NPM
     BUNGARAN NATANAEL SIAHAAN : 2317051048
     DEA DELVINATA             : 2317051027
@@ -40,7 +40,7 @@ void gotoxy(int x, int y) {
     char timeExplore;//hours
     char up;
     char sword;
-    char todo;
+    string todo;
     bool kembali = false;
 
 // Global Loading
@@ -223,26 +223,23 @@ in_game:
     cout << "2. Explore" << endl;
     cout << "3. Shop" << endl;
     cin >> todo;
-    
-    switch(todo){
-        case '1':
-            system("cls");
-            goto weapon;
-            todo = '\0';
-            break;
-        case '2':
-            system("cls");
-            goto game;
-            todo = '\0';
-            break;
-        case '3':
-            system("cls");
-            cout <<"kasus 3";
-            //goto shop;
-            todo = '\0';
-            break;
-    }
 
+    if(todo == "3" || todo == "2" || todo == "1"){
+    if(todo == "3"){
+        system("cls");
+        cout <<"kasus 3";
+        //goto shop;
+        todo.clear();
+    }else if(todo == "2"){
+        system("cls");
+        goto game;
+        todo.clear();
+    }else if(todo == "1"){
+        system("cls");
+        goto weapon;
+        todo.clear();
+    }
+    }else{todo.clear();system("cls");goto in_game;}
 game:
     cout << "\nExplore (max 8 hours)\n";
     cout << "Mau Explore berapa lama ? : ";
