@@ -36,7 +36,7 @@ void gotoxy(int x, int y) {
 
 // DEKLARASI IN-GAME
     int health = 100, gold, defense = 0, SwordLevel = 1;
-    int SwordCost1 = 50;
+    int SwordCost1 = 50;int experience=0; // pvp, monster,shop;
     char timeExplore;//hours
     char up;
     char sword;
@@ -80,13 +80,15 @@ void weapon(int gold) {
     kembali = true;
 }
 
-void game(int gold) {
-   
-}
-
-void in_game(){
-
-
+void barStatus(){
+cout<<"     _________________________________"<< endl;   
+cout<<"    /      B A R     S T A T U S      \\"<< endl;   
+cout<<"   /___________________________________\\"<< endl;   
+cout<<"   |"<<"  Health      : " << health <<"                 |"<< endl;
+cout<<"   |"<<"  Defense     : "<< defense <<"                   |"<< endl;
+cout<<"   |"<<"  Gold        : " << gold <<"                 |"<< endl;
+cout<<"   |"<<"  experience  : "<< experience <<"                   |"<< endl;
+cout<<"    \\__________________________________/"<< endl;   
 }
 
 // In - Game
@@ -217,6 +219,7 @@ int main(){
     opening();
 
 in_game:
+    barStatus();
     cout << "Hello ! Good Morning, " << username << endl;
     cout << "What would like you in this morning ?" << endl;
     cout << "1. Train" << endl; //sword level == train ==weapon
