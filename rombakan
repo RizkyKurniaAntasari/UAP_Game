@@ -10,8 +10,9 @@
 #include <thread>
 #include <time.h>
 #include <windows.h>
+#include <iomanip> // menepatkan bar agar tidak geser
 using namespace std;
-
+using std::setw;
 //POSITIONING 
 int X, Y;
 COORD coord = {X=0, Y=0};
@@ -80,21 +81,21 @@ void weapon(int gold) {
     kembali = true;
 }
 
-void barStatus(){
-cout<<"     _________________________________"<< endl;   
-cout<<"    /      B A R     S T A T U S      \\"<< endl;   
-cout<<"   /___________________________________\\"<< endl;   
-cout<<"   |"<<"  Health      : " << health <<"                 |"<< endl;
-cout<<"   |"<<"  Defense     : "<< defense <<"                   |"<< endl;
-cout<<"   |"<<"  Gold        : " << gold <<"                 |"<< endl;
-cout<<"   |"<<"  experience  : "<< experience <<"                   |"<< endl;
-cout<<"    \\__________________________________/"<< endl;   
+void barStatus() {
+    cout << "      _________________________________" << endl;
+    cout << "     /      B A R     S T A T U S      \\" << endl;
+    cout << "    /___________________________________\\" << endl;
+    // Menggunakan setw untuk menetapkan lebar tetap
+    cout << setw(5) << "   |" << "  Health      : " << setw(7) << health << "            |" << endl;
+    cout << setw(5) << "   |" << "  Defense     : " << setw(7) << defense << "            |" << endl;
+    cout << setw(5) << "   |" << "  Gold        : " << setw(7) << gold << "            |" << endl;
+    cout << setw(5) << "   |" << "  experience  : " << setw(7) << experience << "            |" << endl;
+    cout << "    \\__________________________________/" << endl;
 }
 
 // In - Game
 void startgame(){
     system("cls");
-    cout << "game started !";
     //if(true){return;}//game(gold);
 }
 
