@@ -1,0 +1,47 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+int main() {
+    // Nama file untuk menyimpan data akun
+    const std::string filename = "accounts.txt";
+
+    // Membaca user ID dan kata sandi yang benar dari file
+    std::ifstream accountsFile(filename);
+    std::string storedUserID;
+    std::string storedPassword;
+
+    if (accountsFile.is_open()) {
+        // Meminta pengguna untuk memasukkan user ID dan kata sandi
+        std::string inputUserID;
+        std::string inputPassword;
+
+        std::cout << "Masukkan User ID: ";
+        std::cin >> inputUserID;
+
+        std::cout << "Masukkan kata sandi: ";
+        std::cin >> inputPassword;
+
+        bool accountFound = false;
+
+        while (accountsFile >> storedUserID >> storedPassword) {
+            if (inputUserID == storedUserID && inputPassword == storedPassword) {
+                accountFound = true;
+                break;
+            }
+        }
+
+        if (accountFound) {
+            std::cout << "User ID dan kata sandi benar. Akses diberikan." << std::endl;
+        } else {
+            std::cout << "User ID atau kata sandi salah. Akses ditolak." << std::endl;
+        }
+
+        accountsFile.close();
+    } else {
+        std::cout << "File accounts tidak ditemukan." << std::endl;
+        return 1;
+    }
+
+    return 0;
+}
