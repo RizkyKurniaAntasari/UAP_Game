@@ -1,0 +1,57 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+// Fungsi untuk membaca semua akun dari file
+std::vector<std::pair<std::string, std::string>> readAccounts(const std::string& filename) {
+    std::vector<std::pair<std::string, std::string>> accounts;
+    std::ifstream accountsFile(filename);
+    std::string userID, password;
+    
+    while (accountsFile >> userID >> password) {
+        accounts.push_back(std::make_pair(userID, password));
+    }
+    
+    accountsFile.close();
+    return accounts;
+}
+
+// Fungsi untuk menyimpan semua akun ke file
+void saveAccounts(const std::string& filename, const std::vector<std::pair<std::string, std::string>>& accounts) {
+    std::ofstream outFile(filename);
+    
+    for (const auto& account : accounts) {
+        outFile << account.first << ' ' << account.second << std::endl;
+    }
+    
+    outFile.close();
+}
+
+int main() {
+    // Nama file untuk menyimpan data akun
+    const std::string filename = "accounts.txt";
+
+    // Membaca semua akun dari file
+    std::vector<std::pair<std::string, std::string>> accounts = readAccounts(filename);
+
+    // Meminta pengguna untuk memasukkan user ID dan kata sandi baru
+    std::string newUserID;
+    std::string newPassword;
+
+    std::cout << "Masukkan User ID baru: ";
+    std::cin >> newUserID;
+
+    std::cout << "Masukkan kata sandi baru: ";
+    std::cin >> newPassword;
+
+    // Menambahkan akun baru ke dalam vektor akun
+    accounts.push_back(std::make_pair(newUserID, newPassword));
+
+    // Menyimpan semua akun ke dalam file
+    saveAccounts(filename, accounts);
+
+    std::cout << "Data akun baru telah disimpan." << std::endl;
+
+    return 0;
+}
