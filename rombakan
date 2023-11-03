@@ -4,6 +4,8 @@
     DEA DELVINATA             : 2317051027
     RIZKY KURNIA ANTASARI     : 2357051011
 */
+
+// INCLUDING LIBRARY
 #include <bits/stdc++.h> 
 #include <string>
 #include <chrono>
@@ -11,10 +13,18 @@
 #include <time.h>
 #include <windows.h>
 #include <iomanip> // menepatkan bar agar tidak geser
+
+// COLORING
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+
 using namespace std;
 using std::setw;
+
 //POSITIONING 
-int X, Y;
+short int X, Y;
 COORD coord = {X=0, Y=0};
 
 void gotoxy(int x, int y) {
@@ -52,6 +62,25 @@ void global(){
             cout << "\033[34m" << x << "\033[0m";}
 }
 // Global Loading
+
+void HealthBar(){
+    for(int i=30;i>0;i--){
+        char x=219; 
+        if(i >= 22){
+            gotoxy(13,13);
+            for(int j=i;j>0;--j){cout << GREEN << x;}
+        }else if(i >= 12 ){
+            gotoxy(13,13);
+            for(int j=i;j>0;--j){cout << YELLOW << x << RESET;}
+        }else{
+            gotoxy(13,13);
+            for(int j=i;j>0;--j){cout << RED << x << RESET;}
+        }
+            for(int j=30-i;j>0;--j){cout << " ";}
+        Sleep(200);    
+    }
+    // gotoxy nya belom di set.
+}
 
 void weapon(int gold) {
     cout << "Would you like to upgrade your weapon (y/n) :";
@@ -91,6 +120,7 @@ void barStatus() {
     cout << setw(5) << "   |" << "  Gold        : " << setw(7) << gold << "            |" << endl;
     cout << setw(5) << "   |" << "  experience  : " << setw(7) << experience << "            |" << endl;
     cout << "    \\__________________________________/" << endl;
+    //HealthBar();
 }
 
 // In - Game
@@ -155,6 +185,36 @@ void Register(){
     login();
 }
 
+void HowToPlay(){
+int i =4;
+cout << GREEN;
+gotoxy(37,i);cout << "    _______________________________________________________" ;i++;
+gotoxy(37,i);cout << "   /\\           H  O  W      T  O      P  L  A  Y          \\";i++;
+gotoxy(37,i);cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)";i++;
+gotoxy(37,i);cout << "   \\/''''''''''''''''''''''''''''''''''''''''''''''''''''''/";i++;
+gotoxy(37,i);cout << "   (                                                      ("  ;i++;
+gotoxy(37,i);cout << "    )                                                      )";i++;
+gotoxy(37,i);cout << "   (                                                      (";i++;
+gotoxy(37,i);cout << "    )                                                      )";i+=2;
+
+gotoxy(37,i);cout << "   (                                                      (";i++;
+gotoxy(37,i);cout << "    )                                                      )";i++;
+gotoxy(37,i);cout << "   (                                                      (";i++;
+gotoxy(37,i);cout << "    )                                                      )";i+=2;
+
+gotoxy(37,i);cout << "   (                                                      (";i++;
+gotoxy(37,i);cout << "    )                                                      )";i++;
+gotoxy(37,i);cout << "   (                                                      (";i++;
+gotoxy(37,i);cout << "    )                                                      )";i+=2;
+
+gotoxy(37,i);cout << "   (                                                      (" ;i++;
+gotoxy(37,i);cout << "    )                                                      )";i++;
+gotoxy(37,i);cout << "   (                                                      (";i++;
+gotoxy(37,i);cout << "   /\\''''''''''''''''''''''''''''''''''''''''''''''''''''''\\" ;i++;
+gotoxy(37,i);cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)";i++;
+gotoxy(37,i);cout << "    \\/______________________________________________________/";i++;
+cout << RESET;
+}
 // Main Menu
 void mainMenu(){
     system("cls");
@@ -196,6 +256,7 @@ gotoxy(31,23);cout << " your choise : ";
     }
 }
 
+// Loading for Main Menu
 void Loading(){
     char x = 219;
     for(int i=0;i<=27;i++){
@@ -203,14 +264,17 @@ void Loading(){
         cout << x;
     }
     system("cls");
-    //system("pause"); // press any key to continue
+    HowToPlay();
+    system("pause");//  == press any key to continue
     mainMenu();
 }
 
+//Take your user name 
 void opening(){
 //  cout << " Selamat datang di game advanture !\n\n ";
     cout << " Insert your name : ";
     getline(cin,username);
+    //HealthBar();
     Loading();
 }
 //////////////////////////////////////////////////////////////////////////////////////
