@@ -23,6 +23,10 @@
 using namespace std;
 using std::setw;
 
+
+//nyoba
+bool back=false;
+
 //POSITIONING 
 short int X, Y;
 COORD coord = {X=0, Y=0};
@@ -187,6 +191,7 @@ void Register(){
 
 void HowToPlay(){
 int i =4;
+system("cls");
 cout << GREEN;
 gotoxy(37,i);cout << "    _______________________________________________________" ;i++;
 gotoxy(37,i);cout << "   /\\           H  O  W      T  O      P  L  A  Y          \\";i++;
@@ -214,6 +219,8 @@ gotoxy(37,i);cout << "   /\\''''''''''''''''''''''''''''''''''''''''''''''''''''
 gotoxy(37,i);cout << "(O)===)><><><><><><><><><><><><><><><><><><><><><><><><><><><)==(O)";i++;
 gotoxy(37,i);cout << "    \\/______________________________________________________/";i++;
 cout << RESET;
+cout << endl; system("pause");back=true;return;
+
 }
 // Main Menu
 void mainMenu(){
@@ -236,8 +243,9 @@ gotoxy(31,17);cout << "*********************************************************
 gotoxy(31,18);cout << "Selamat datang, " << username << " !\n\n";
 gotoxy(31,19);cout << "1. Login\n";
 gotoxy(31,20);cout << "2. Register\n";
-gotoxy(31,21);cout << "3. Exit\n\n";
-gotoxy(31,23);cout << " your choise : ";
+gotoxy(31,21);cout << "3. How To Play\n";
+gotoxy(31,22);cout << "4. Exit\n\n";
+gotoxy(31,24);cout << " your choise : ";
     cin >> option;
 
     switch(option){
@@ -248,9 +256,11 @@ gotoxy(31,23);cout << " your choise : ";
             Register();
         //  return;
             break;
-        case '3' : 
+        case '4' : 
             return;
             break;
+        case '3':
+            HowToPlay();
         default:
             mainMenu();
     }
@@ -265,7 +275,7 @@ void Loading(){
     }
     system("cls");
     HowToPlay();
-    system("pause");//  == press any key to continue
+    // system("pause"); == press any key to continue
     mainMenu();
 }
 
@@ -282,6 +292,11 @@ int main(){
 
     system("color 02");
     opening();
+
+    if(back){
+        mainMenu();
+        back=false;
+    }
 
 in_game:
     barStatus();
