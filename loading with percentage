@@ -1,0 +1,40 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+int main() {
+    char x=219;
+    int totalProgress = 50;
+    clock_t start = clock();
+
+    for (int progress = 0; progress <= totalProgress; ++progress) {
+        // Clear the line before printing the next message
+        cout << "\r";
+
+        // Calculate the percentage completion
+        int percentage = (progress * 100) / totalProgress;
+
+        // Print the loading bar with percentage
+        cout << "Loading: ";
+        for (int i = 0; i < progress; ++i) {
+            cout <<"\033[34m"<< x <<"\033[0m";
+        }
+        for (int i = progress; i < totalProgress; ++i) {
+            cout << " ";
+        }
+        cout << percentage << "%";
+
+        // Flush output to the screen
+        cout.flush();
+
+        // Sleep for a short time (without using this_thread)
+        while ((clock() - start) * 1000 / CLOCKS_PER_SEC < 100) {
+            // Do nothing
+        }
+
+        start = clock();  // Reset the clock
+    }
+
+    cout << endl;
+
+    return 0;
+}
