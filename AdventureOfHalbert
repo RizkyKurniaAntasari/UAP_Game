@@ -54,7 +54,7 @@ void gotoxy(int x, int y) {
     bool found = false;
 
 // DEKLARASI IN-GAME
-    int health = 100, gold, defense = 0, SwordLevel = 1;int stamina=0;
+    int health = 100, gold, defense = 0, SwordLevel = 1;int stamina=100;
     int SwordCost1 = 50;int experience=0; // pvp, monster,shop;
     char timeExplore;//hours
     char up;
@@ -89,6 +89,7 @@ void HealthBar(){
     }
     // gotoxy nya belom di set.
 }
+
 
 void ShopStatus(){
 int z=1;int i=2;
@@ -218,6 +219,18 @@ void potion(){
     cout << " |   _\\/_   |" << endl;
     cout << "  \\________/" << endl;
 }
+
+void ShopDesc(){
+    int i=22;
+gotoxy(57+26,i);cout << " ________________________________________________";i++;
+gotoxy(57+26,i);cout << "( |                                            | )";i++;
+gotoxy(57+26,i);cout << "| | Armor can make your defense more great !   | |";i++;
+gotoxy(57+26,i);cout << "| | Sword can make your adventure easier       | |";i++;
+gotoxy(57+26,i);cout << "| | HP POT can Restore your health up to 35%   | |";i++;
+gotoxy(57+26,i);cout << "| | Stamina POT can restore 25 of your stamina | |";i++;
+gotoxy(57+26,i);cout << "(_|____________________________________________|_)";i++;
+}
+
 
 void HelpShop(){
     int z=1;int i=16;
@@ -434,11 +447,10 @@ game:
     }
 
 shop:
-    Shop();
-    HelpShop();
-    gotoxy(48,24);cout << " Welcome to Adventure Shop !";
-    gotoxy(46,26);cout << "What item would you like to buy ? ";
-    gotoxy(46,27);cout << "your answer : ";cin >> belanja;
+    Shop();HelpShop();ShopDesc();
+    gotoxy(48,23);cout << " Welcome to Adventure Shop !";
+    gotoxy(46,25);cout << "What item would you like to buy ? ";
+    gotoxy(46,26);cout << "your answer : ";cin >> belanja;
     switch(belanja){
         case '1':
             //Health
