@@ -54,7 +54,7 @@ void gotoxy(int x, int y) {
     bool found = false;
 
 // DEKLARASI IN-GAME
-    int health = 100, gold, defense = 0, SwordLevel = 1;int stamina=100;
+    int health = 60, gold, defense = 0, SwordLevel = 1;int stamina=0;
     int SwordCost1 = 50;int experience=0; // pvp, monster,shop;
     char timeExplore;//hours
     char up;
@@ -90,6 +90,9 @@ void HealthBar(){
     // gotoxy nya belom di set.
 }
 
+void success(){
+    gotoxy(48,28);cout << MAGENTA << "Success !" <<RESET;
+}
 
 void ShopStatus(){
 int z=1;int i=2;
@@ -236,22 +239,21 @@ void HelpShop(){
     int z=1;int i=16;
 gotoxy(z,i);cout << "   _____________________";i++;
 gotoxy(z,i);cout << " / \\                    \\.";i++;
-gotoxy(z,i);cout << "|   | '1' to buy Armor  |.";i++;
+gotoxy(z,i);cout << "|   |'1' Armor (500g)   |.";i++;
 gotoxy(z,i);cout << " \\_ |                   |.";i++;
-gotoxy(z,i);cout << "    | '2' to buy Sword  |.";i++;
+gotoxy(z,i);cout << "    |'2' Sword (430g)   |.";i++;
 gotoxy(z,i);cout << "    |                   |.";i++;
-gotoxy(z,i);cout << "    | '3' to buy HP POT |.";i++;
+gotoxy(z,i);cout << "    |'3' HP POT (200g)  |.";i++;
 gotoxy(z,i);cout << "    |                   |.";i++;
-gotoxy(z,i);cout << "    | '4' to buy Energy |.";i++;
+gotoxy(z,i);cout << "    |'4' Energy (100g)  |.";i++;
 gotoxy(z,i);cout << "    |                   |.";i++;
-gotoxy(z,i);cout << "    | '9' to Exit       |.";i++;
+gotoxy(z,i);cout << "    |'9' Exit           |.";i++;
 gotoxy(z,i);cout << "    |   ________________|___";i++;
 gotoxy(z,i);cout << "    |  /                   /";i++;
 gotoxy(z,i);cout << "    \\_/___________________/.";i++;
 }
 
 void Shop(){
-    system("cls");
     ShopStatus();
 int z = 39;int i = 2;
 cout << GREEN;
@@ -387,6 +389,8 @@ void opening(){
     getline(cin,username);
     //HealthBar();
     Loading();
+
+
 }
 //////////////////////////////////////////////////////////////////////////////////////
 int main(){
@@ -450,16 +454,19 @@ shop:
     Shop();HelpShop();ShopDesc();
     gotoxy(48,23);cout << " Welcome to Adventure Shop !";
     gotoxy(46,25);cout << "What item would you like to buy ? ";
+    gotoxy(48,26);cout << "                                   ";
     gotoxy(46,26);cout << "your answer : ";cin >> belanja;
     switch(belanja){
         case '1':
-            //Health
+
             break;
         case '2':
 
             break;
         case '3':
-
+            if(health==100 && gold >= 200){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your HP is Already Full !"<< RESET; }
+            else if(health <= 99 &&health>=65 && gold >=200 ){success();health=100;gold-=200;}else if(gold>=200 && health<65){success();gold-=200;health+=35;}
+            else if(gold < 200){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
             break;
         case '4':
             
@@ -472,8 +479,7 @@ shop:
             goto shop;
             break;
     }
-    system("pause");
-goto in_game;
+goto shop;
 
 // if gold is not enough
 invalid:
