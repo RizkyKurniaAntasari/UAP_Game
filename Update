@@ -1,19 +1,38 @@
-/*  copy GAME UTP DDP     
+/*  ini pepek 
     NAMA KELOMPOK : NPM
     BUNGARAN NATANAEL SIAHAAN : 2317051048
     DEA DELVINATA             : 2317051027
     RIZKY KURNIA ANTASARI     : 2357051011
 */
+
+// INCLUDING LIBRARY
 #include <bits/stdc++.h> 
+#include <iostream>
 #include <string>
 #include <chrono>
 #include <thread>
 #include <time.h>
 #include <windows.h>
+#include <iomanip> // menepatkan bar agar tidak geser
+
+// COLORING
+#define RESET "\033[0m"
+#define BLACK "\033[30m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define CLAY "\033[36m"
+#define WHITE "\033[37m"
+#define GRAY "\033[1;30m"
+#define WHITE_BG "\033[47m"
+
 using namespace std;
+using std::setw;
 
 //POSITIONING 
-int X, Y;
+short int X, Y;
 COORD coord = {X=0, Y=0};
 
 void gotoxy(int x, int y) {
@@ -25,24 +44,24 @@ void gotoxy(int x, int y) {
 // DEKLARASI SYSTEM
     string username;
     string name;
-    string user[10]={""};
+    string user[99]={""}; // default
+    string pass[99]={""}; // default
+    string password;
+    int i=0,j=0;
 
-    string pass[10]={""};string password;
-    int pemberhentian=0;int i=0,j=0;
-
-    char option;char jawaban;
-
+    char option;char jawaban;char belanja;
+    bool reset = false;
     bool found = false;
 
 // DEKLARASI IN-GAME
-    int health = 100, gold, armor = 0, SwordLevel = 1;
-    int SwordCost1 = 50;
+    int health = 60, gold=100000, defense = 0, SwordLevel = 6;int stamina=20;
+    int SwordCost1 = 50;int experience=0; // pvp, monster,shop;
     char timeExplore;//hours
     char up;
     char sword;
-    char todo;
-    bool kembali = false;
-
+    string todo;
+    bool Exit = false; // untuk bolak baik ke main menu- how to play
+    bool muncul=false;
 // Global Loading
 void global(){
     char x = 219;
@@ -52,175 +71,285 @@ void global(){
 }
 // Global Loading
 
-void train(){
-    
-}
-
-
-void weap(int gold) {
-    cout << "Would you like to upgrade your weapon (y/n) :";
-    cin >> up;
-
-    if (up == 'y') {
-        cout << endl << "Your current gold : " << gold;
-        cout << endl << "Your current sword : " << SwordLevel << endl;
-        cout << "Upgrade sword (y/n) : ";
-        cin >> sword;
-
-        if (gold >= SwordCost1 && sword == 'y') {
-            SwordLevel += 1;
-            gold = gold - SwordCost1;
-            SwordCost1 += 60;
+void HealthBar(){
+    for(int i=30;i>0;i--){
+        char x=219; 
+        if(i >= 22){
+            gotoxy(13,13);
+            for(int j=i;j>0;--j){cout << GREEN << x;}
+        }else if(i >= 12 ){
+            gotoxy(13,13);
+            for(int j=i;j>0;--j){cout << YELLOW << x << RESET;}
+        }else{
+            gotoxy(13,13);
+            for(int j=i;j>0;--j){cout << RED << x << RESET;}
         }
-        else if (up == 'n') {
-            system("cls");
-            kembali = false;
-        }
+            for(int j=30-i;j>0;--j){cout << " ";}
+        Sleep(200);    
     }
-    else if (up == 'n') {
-        system("cls");
-        return;
-    }
-    cout << endl << "Current gold : " << gold << " " << "Current Sword Level : " << SwordLevel << endl;
-    kembali = true;
+    // gotoxy nya belom di set.
 }
 
-void game(int gold) {
-    cout << "\nExplore (max 8 hours)\n";
-    cout << "Mau Explore berapa lama ? : ";
-    cin >> timeExplore; // cin tipe data char, jika bertemu dengan value aneh, akan di konversi menggunakan kode ascii
-
-    if (timeExplore <= 56 && timeExplore >= 49) { // Stamina
-        gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
-        cout << "You earned " << gold << " gold ! " << endl << endl;
-        weap(gold);
-    }
-    else if(timeExplore > 56 && timeExplore < 49){
-        system("cls");
-        cout << "Invalid Value !";
-        game(gold);
-    }
-    else {
-        system("cls");
-        game(gold);
-    }
-    if (kembali) {
-        game(gold);
-    }
+void success(){
+    gotoxy(48,28);cout << MAGENTA << "Success !" <<RESET;
 }
 
-void in_game(){
-    system("cls");
-    cout << "Hello ! Good Morning, " << username << endl;
-    cout << "What would like you in this morning ?" << endl;
-    cout << "1. Train" << endl;
-    cout << "2. Explore" << endl;
-    cout << "3. Shop" << endl;
-    cin >> todo;
-
-    switch(todo){
-        case '1':
-            system("cls");
-            train();
-            break;
-        case '2':
-            system("cls");
-            game(gold);
-            break;
-        case '3':
-            cout <<"kasus 3";
-            break;
-    }
-
+void ShopStatus(){
+int z=1;int i=2;
+gotoxy(z,i);cout << setw(5) << ".=~=.                            .=~=.";i++;
+gotoxy(z,i);cout << setw(5) << "(__)-._.-=-._.-=-._.-=-._.-=-._.-=(__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)                              (__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)-._.-=-._.-=-._.-=-._.-=-._.-=(__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)                              (__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)  " << RED << "Health  : "     << setw(7) << health     << WHITE << "           (__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)  " << BLUE << "Defense : "    << setw(7) << defense    << WHITE << "           (__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)  " << YELLOW << "Gold    : "  << setw(7) << gold       << WHITE << "           (__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)  " << GREEN << "Stamina : "   << setw(7) << stamina    << WHITE << "           (__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)  " << MAGENTA << "EXP     : " << setw(7) << experience << WHITE << "           (__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)                              (__)";i++;
+gotoxy(z,i);cout << setw(5) << "(__)-._.-=-._.-=-._.-=-._.-=-._.-=(__)";i++;
+gotoxy(z,i);cout << setw(5) << "'._.'                            '._.'";i++;
+cout << RESET;
 }
 
-// In - Game
-void startgame(){
-    system("cls");
-    cout << "game started !";
-    //game(gold);
-    in_game();
+void barStatus() {
+    int z=50;int i=2;
+    cout << GREEN;
+gotoxy(z,i);cout << "      _________________________________";i++;
+gotoxy(z,i);cout << "     /      B A R     S T A T U S      \\";i++;
+gotoxy(z,i);cout << "    /___________________________________\\";i++;
+gotoxy(z,i);// Menggunakan setw untuk menetapkan lebar tetapi++;
+gotoxy(z,i);cout << setw(5) << "   |" << RED <<"  Health      : "<< setw(7) << health << GREEN << "            |";i++;
+gotoxy(z,i);cout << setw(5) << "   |" << BLUE <<"  Defense     : " << setw(7) << defense << GREEN << "            |";i++;
+gotoxy(z,i);cout << setw(5) << "   |" << YELLOW << "  Gold        : " << setw(7) << gold << GREEN << "            |";i++;
+gotoxy(z,i);cout << setw(5) << "   |" << MAGENTA <<"  Experience  : " << setw(7) << experience << GREEN << "            |";i++;
+gotoxy(z,i);cout << "    \\__________________________________/";i++;
+    //HealthBar();
+    cout << RESET;
 }
 
 //Menu login with Boolean
 void login(){
-        cout << " \033[1m Menu Login \033[0m" << endl;
-        cout << "enter user-id: ";
-        cin >> name;
-        cout << "enter password : ";
-        cin >> password;
-        cout << endl;
-        for(int a=0;a<10;a++){
-        if(name == user[a] && password == pass[a])
-        {   
+    int W=42;int V=7;
+cout << BLUE;
+gotoxy(W,V);cout << "   .'_________________________________________  '." ;V++;
+gotoxy(W,V);cout << "  : .'                                         '. :";V++;
+gotoxy(W,V);cout << "  | |    ____________________________________   | |";V++;
+gotoxy(W,V);cout << "  | |  .:____________________________________:. | |";V++;
+gotoxy(W,V);cout << "  | |  |               LOGIN                 |  | |";V++;
+gotoxy(W,V);cout << "  | |  |                                     |  | |";V++;
+gotoxy(W,V);cout << "  | |  | User ID  :                          |  | |";V++;
+gotoxy(W,V);cout << "  | |  | Password :                          |  | |";V++;
+gotoxy(W,V);cout << "  | |  |                                     |  | |";V++;    
+gotoxy(W,V);cout << "  | |  '.________|__|__|__|__|__|__|________.'  | |";V++;
+gotoxy(W,V);cout << "  | |                                           | |";V++;
+gotoxy(W,V);cout << "  : '._________________________________________.' :";V++;
+gotoxy(W,V);cout << "   .____________________\\__/____________________." ;V++;
+cout << RESET;
+        gotoxy(V+42,13);cin >> name;
+        gotoxy(V+42,14);cin >> password;
+        for(int a=0;a<99;a++){
+        if(name == user[a] && password == pass[a] || name == "dev" && password == "devpass")
+        {   int W=42,V=7;
             global();
-            startgame();
+            system("cls");
             found = true;
+            name.clear();password.clear();
             break;
-        }
+        }else if(name == "reset" && password == "reset"){reset=true;return;}
+        else{found=false;}
         if(!found)
-        {   
+        {   int W=42,V=7;
             system("cls");
             name.clear();password.clear();
-            cout << "\033[31m"<< "Wrong Password or User-ID !" << "\033[0m"<< endl;
+            gotoxy(W+14,22);cout << "\033[31m"<< "Wrong Password or User-ID !" << "\033[0m"<< endl;
             login();
         }
         }
 }
 
+rule(){
+
+}
 // Registration
 void Register(){
+    //rule();
     system("cls");
+    int W=42;int V=7;int pemberhentian=0;
    while(true){
-
         if(pemberhentian == 1){
             break;
         }
-        cout << "enter new user-id: ";
-        cin >> user[i];
-        i++;
-        cout << "enter new password : ";
-        cin >> pass[j];
-        j++;
-        cout << "Create Account (y/n) : ";
-        cin >> jawaban;
+cout << WHITE;
+gotoxy(W,V);cout << "   .'_________________________________________  '." ;V++;
+gotoxy(W,V);cout << "  : .'                                         '. :";V++;
+gotoxy(W,V);cout << "  | |    ____________________________________   | |";V++;
+gotoxy(W,V);cout << "  | |  .:____________________________________:. | |";V++;
+gotoxy(W,V);cout << "  | |  |              REGISTER               |  | |";V++;
+gotoxy(W,V);cout << "  | |  |                                     |  | |";V++;
+gotoxy(W,V);cout << "  | |  | User ID  :                          |  | |";V++;
+gotoxy(W,V);cout << "  | |  | Password :                          |  | |";V++;
+gotoxy(W,V);cout << "  | |  |                                     |  | |";V++;    
+gotoxy(W,V);cout << "  | |  '.________|__|__|__|__|__|__|________.'  | |";V++;
+gotoxy(W,V);cout << "  | |                                           | |";V++;
+gotoxy(W,V);cout << "  : '._________________________________________.' :";V++;
+gotoxy(W,V);cout << "   .____________________\\__/____________________." ;V++;
+cout << RESET;
+        gotoxy(V+42,13);cin >> user[i];i++;
+        gotoxy(V+42,14);cin >> pass[j];j++;
+        gotoxy(V+20,21);cout << "Your New-Account is Be Able to Create !";
+        gotoxy(V+20,22);cout << "Create Account (y/n) : ";
+                cin >> jawaban;
         if(jawaban == 'y'){
         pemberhentian+=1;
          }else{
+            V =7;W=42;
             i = i - i;
             j = j - j;
             system("cls");
          }
     }
-    cout << endl << "Account has been created ! " << endl;
-    global();
+    gotoxy(V+19,23);global();
+    gotoxy(V+19,24);cout << "Account has been created ! " << endl;
     system("cls");
     login();
 }
 
+void potion(){
+    cout << "   ________" << endl;
+    cout << "  /        \\" << endl;
+    cout << " |   (o)    |" << endl;
+    cout << " |   _\\/_   |" << endl;
+    cout << "  \\________/" << endl;
+}
+
+void ShopDesc(){
+    int i=22;
+gotoxy(57+26,i);cout << " ________________________________________________";i++;
+gotoxy(57+26,i);cout << "( |                                            | )";i++;
+gotoxy(57+26,i);cout << "| | Armor can make your defense more great !   | |";i++;
+gotoxy(57+26,i);cout << "| | Sword can make your adventure easier       | |";i++;
+gotoxy(57+26,i);cout << "| | HP POT can Restore your health up to 35%   | |";i++;
+gotoxy(57+26,i);cout << "| | Stamina POT can restore 25 of your stamina | |";i++;
+gotoxy(57+26,i);cout << "(_|____________________________________________|_)";i++;
+}
+
+
+void HelpShop(){
+    int z=1;int i=16;
+gotoxy(z,i);cout << "   _____________________";i++;
+gotoxy(z,i);cout << " / \\                    \\.";i++;
+gotoxy(z,i);cout << "|   |'1' Armor (500g)   |.";i++;
+gotoxy(z,i);cout << " \\_ |                   |.";i++;
+gotoxy(z,i);cout << "    |'2' Sword (430g)   |.";i++;
+gotoxy(z,i);cout << "    |                   |.";i++;
+gotoxy(z,i);cout << "    |'3' HP POT (200g)  |.";i++;
+gotoxy(z,i);cout << "    |                   |.";i++;
+gotoxy(z,i);cout << "    |'4' Energy (100g)  |.";i++;
+gotoxy(z,i);cout << "    |                   |.";i++;
+gotoxy(z,i);cout << "    |'9' Exit           |.";i++;
+gotoxy(z,i);cout << "    |   ________________|___";i++;
+gotoxy(z,i);cout << "    |  /                   /";i++;
+gotoxy(z,i);cout << "    \\_/___________________/.";i++;
+}
+
+void Shop(){
+    ShopStatus();
+int z = 39;int i = 2;
+cout << GREEN;
+gotoxy(z,i);cout << "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}";i++;
+gotoxy(z,i);cout << "{}                                                                                          {}";i++;
+gotoxy(z,i);cout << "{}                                 ____  _   _  ___  ____                                   {}";i++;
+gotoxy(z,i);cout << "{}                                / ___|| | | |/ _ \\|  _ \\                                  {}";i++;
+gotoxy(z,i);cout << "{}                                \\___ \\| |_| | | | | |_) |                                 {}";i++;
+gotoxy(z,i);cout << "{}                                 ___) |  _  | |_| |  __/                                  {}";i++;
+gotoxy(z,i);cout << "{}                                |____/|_| |_|\\___/|_|                                     {}";i++;
+gotoxy(z,i);cout << "{}                                                                                          {}";i++;
+gotoxy(z,i);cout << "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}";i++;
+gotoxy(z,i);cout << "{}                                                                                          {}";i++;
+gotoxy(z,i);cout << "{}         __   __                    __                                                    {}";i++;
+gotoxy(z,i);cout << "{}   1.   /  `-'  \\           2.     _||_            3.                  4.      .-.        {}";i++;
+gotoxy(z,i);cout << "{}       /_|     |_\\                ( || )                   |~|                .' `.       {}";i++;
+gotoxy(z,i);cout << "{}         |     |                    ||                     | |                |   |       {}";i++;
+gotoxy(z,i);cout << "{}         |     |                    ||                   .'   `.              |   |       {}";i++;
+gotoxy(z,i);cout << "{}         |_____|                    \\/                   '.___.'              `...'       {}";i++;
+gotoxy(z,i);cout << "{}                                                                                          {}";i++;
+gotoxy(z,i);cout << "{}         "<< BLUE << "-ARMOR-" << "                 " WHITE << "-SWORD 1-" << "             " RED << " -HP POT-" << "        " YELLOW << "  -ENERGY POT-" << GREEN << "    {}" ;i++;
+gotoxy(z,i);cout << "{}                                                                                          {}";i++;
+gotoxy(z,i);cout << "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}";i++;
+cout << RESET;
+}
+
+
+void HowToPlay(){ // login menu
+int i =0;int z=37;
+system("cls");
+cout << GREEN;
+gotoxy(z,i);cout<< "   _________________________________________________________________";i++;
+gotoxy(z,i);cout<< " / \\                    BAGAIMANA CARA BERMAIN ?                    \\.";i++;
+gotoxy(z,i);cout<< "|   |                                                               |.";i++;
+gotoxy(z,i);cout<< " \\_ |  Memulai Permainan:                                           |.";i++;
+gotoxy(z,i);cout<< "    |  Saat memulai, Anda akan diminta untuk memilih senjata untuk  |.";i++;
+gotoxy(z,i);cout<< "    |  karakter Anda.                                               |.";i++;
+gotoxy(z,i);cout<< "    |                                                               |.";i++;
+gotoxy(z,i);cout<< "    |  Mode Train:                                                  |.";i++;
+gotoxy(z,i);cout<< "    |  Dalam mode ini, Anda akan melawan dummy.                     |.";i++;
+gotoxy(z,i);cout<< "    |  Setiap kali Anda menyerang dummy, Anda akan mendapatkan 20   |.";i++;
+gotoxy(z,i);cout<< "    |  emas.                                                        |.";i++;
+gotoxy(z,i);cout<< "    |                                                               |.";i++;
+gotoxy(z,i);cout<< "    |  Mode explore :                                               |.";i++;
+gotoxy(z,i);cout<< "    |  Pemain akan berjalan dan mengeksplor area sekitar.           |.";i++;
+gotoxy(z,i);cout<< "    |  Selama eksplorasi, pemain dapat bertemu dengan monster kecil |.";i++;
+gotoxy(z,i);cout<< "    |  atau mendapatkan quest mendadak (sudden quest).              |.";i++;
+gotoxy(z,i);cout<< "    |                                                               |.";i++;
+gotoxy(z,i);cout<< "    |  Bertarung dengan monster:                                    |.";i++;
+gotoxy(z,i);cout<< "    |  Dalam mode explore, Anda akan bertemu dengan monster. Defeat |.";i++;
+gotoxy(z,i);cout<< "    |  mereka untuk mendapatkan emas dan hadiah lainnya.            |.";i++;
+gotoxy(z,i);cout<< "    |  Ingat, monster dapat menyerang dan mengurangi hp karakter    |.";i++;
+gotoxy(z,i);cout<< "    |  anda.                                                        |.";i++;
+gotoxy(z,i);cout<< "    |                                                               |.";i++;
+gotoxy(z,i);cout<< "    |  Membeli senjata baru :                                       |.";i++;
+gotoxy(z,i);cout<< "    |  Anda dapat menggunakan emas yang telah dikumpulkan untuk     |.";i++;
+gotoxy(z,i);cout<< "    |  membeli senjata yang lebih baik. Senjata yang lebih baik akan|.";i++;
+gotoxy(z,i);cout<< "    |  meningkatkan kemampuan karakter Anda dalam pertarungan.      |.";i++;
+gotoxy(z,i);cout<< "    |                                                               |.";i++;
+gotoxy(z,i);cout<< "    |  HP karakter :                                                |.";i++;
+gotoxy(z,i);cout<< "    |  Karakter Anda memiliki sejumlah HP. Jika HP ini              |.";i++;
+gotoxy(z,i);cout<< "    |  habis karena serangan monster, permainan akan berakhir.      |.";i++;
+gotoxy(z,i);cout<< "    |                                                               |.";i++;
+gotoxy(z,i);cout<< "    |  Akhiri permainan :                                           |.";i++;
+gotoxy(z,i);cout<< "    |  permainan akan berakhir saat karakter anda mati.             |.";i++;
+gotoxy(z,i);cout<< "    |   ____________________________________________________________|___";i++;
+gotoxy(z,i);cout<< "    |  /                                                               /.";i++;
+gotoxy(z,i);cout<< "    \\_/_______________________________________________________________/.";i++;
+cout << RESET;
+cout << endl; system("pause");
+
+}
 // Main Menu
 void mainMenu(){
     system("cls");
              cout << endl;// The Adventure Of Halbert
-gotoxy(31,4);cout << "*************************************************************************" << endl;
-gotoxy(31,5);cout << "*  _____ _               _       _                 _                    *" << endl;
-gotoxy(31,6);cout << "* |_   _| |__   ___     / \\   __| |_   _____ _ __ | |_ _   _ _ __ ___   *" << endl;
-gotoxy(31,7);cout << "*   | | | '_ \\ / _ \\   / _ \\ / _` \\ \\ / / _ \\ '_ \\| __| | | | '__/ _ \\  *" << endl;
-gotoxy(31,8);cout << "*   | | | | | |  __/  / ___ \\ (_| |\\ V /  __/ | | | |_| |_| | | |  __/  *" << endl;
-gotoxy(31,9);cout << "*   |_| |_| |_|\\___| /_/   \\_\\__,_| \\_/ \\___|_| |_|\\__|\\__,_|_|  \\___|  *" << endl;
-gotoxy(31,10);cout << "*                                                                       *" << endl;
-gotoxy(31,11);cout << "*                    __   _   _       _ _               _               *" << endl;
-gotoxy(31,12);cout << "*              ___  / _| | | | | __ _| | |__   ___ _ __| |_             *" << endl;
-gotoxy(31,13);cout << "*             / _ \\| |_  | |_| |/ _` | | '_ \\ / _ \\ '__| __|            *" << endl;
-gotoxy(31,14);cout << "*            | (_) |  _| |  _  | (_| | | |_) |  __/ |  | |_             *" << endl;
-gotoxy(31,15);cout << "*             \\___/|_|   |_| |_|\\__,_|_|_.__/ \\___|_|   \\__|            *" << endl; 
-gotoxy(31,16);cout << "*                                                                       *" << endl;
-gotoxy(31,17);cout << "*************************************************************************" << endl;
-gotoxy(31,18);cout << "Selamat datang, " << username << " !\n\n";
-gotoxy(31,19);cout << "1. Login\n";
-gotoxy(31,20);cout << "2. Register\n";
-gotoxy(31,21);cout << "3. Exit\n\n";
-gotoxy(31,23);cout << " your choise : ";
+gotoxy(31,4);cout << "*************************************************************************";
+gotoxy(31,5);cout << "*  _____ _               _       _                 _                    *";
+gotoxy(31,6);cout << "* |_   _| |__   ___     / \\   __| |_   _____ _ __ | |_ _   _ _ __ ___   *";
+gotoxy(31,7);cout << "*   | | | '_ \\ / _ \\   / _ \\ / _` \\ \\ / / _ \\ '_ \\| __| | | | '__/ _ \\  *";
+gotoxy(31,8);cout << "*   | | | | | |  __/  / ___ \\ (_| |\\ V /  __/ | | | |_| |_| | | |  __/  *";
+gotoxy(31,9);cout << "*   |_| |_| |_|\\___| /_/   \\_\\__,_| \\_/ \\___|_| |_|\\__|\\__,_|_|  \\___|  *";
+gotoxy(31,10);cout << "*                                                                       *";
+gotoxy(31,11);cout << "*                    __   _   _       _ _               _               *";
+gotoxy(31,12);cout << "*              ___  / _| | | | | __ _| | |__   ___ _ __| |_             *";
+gotoxy(31,13);cout << "*             / _ \\| |_  | |_| |/ _` | | '_ \\ / _ \\ '__| __|            *";
+gotoxy(31,14);cout << "*            | (_) |  _| |  _  | (_| | | |_) |  __/ |  | |_             *";
+gotoxy(31,15);cout << "*             \\___/|_|   |_| |_|\\__,_|_|_.__/ \\___|_|   \\__|            *"; 
+gotoxy(31,16);cout << "*                                                                       *";
+gotoxy(31,17);cout << "*************************************************************************";
+gotoxy(31,18);cout << "Selamat datang, " << username;
+gotoxy(31,19);cout << "1. Login";
+gotoxy(31,20);cout << "2. Register";
+gotoxy(31,21);cout << "3. How To Play";
+gotoxy(31,22);cout << "4. Exit";
+gotoxy(31,24);cout << " your choise : ";
     cin >> option;
 
     switch(option){
@@ -229,16 +358,19 @@ gotoxy(31,23);cout << " your choise : ";
             break;
         case '2' :
             Register();
-        //  return;
             break;
-        case '3' : 
+        case '4' : 
+            Exit=true;
             return;
             break;
+        case '3':
+            HowToPlay();
         default:
             mainMenu();
     }
 }
 
+// Loading for Main Menu
 void Loading(){
     char x = 219;
     for(int i=0;i<=27;i++){
@@ -246,21 +378,190 @@ void Loading(){
         cout << x;
     }
     system("cls");
-    //system("pause"); // press any key to continue
+    HowToPlay();
+    // system("pause"); == press any key to continue
     mainMenu();
 }
 
+//Take your user name 
 void opening(){
 //  cout << " Selamat datang di game advanture !\n\n ";
     cout << " Insert your name : ";
     getline(cin,username);
+    //HealthBar();
     Loading();
 }
-
+//////////////////////////////////////////////////////////////////////////////////////
 int main(){
 
     system("color 02");
     opening();
+
+open: 
+    if(Exit){
+    return 0;
+    }
+
+    if(reset){
+     system("cls");
+     reset = false;
+     mainMenu();
+    }
+
+in_game:
+    if(Exit){goto open;}
+    system("cls");
+    barStatus();
+    cout << "\n\nHello ! Good Morning, " << username << endl;
+    cout << "What would like you in this morning ?" << endl;
+    cout << "1. Train" << endl; //sword level == train ==weapon
+    cout << "2. Explore" << endl;
+    cout << "3. Shop" << endl;
+    cout << "9. Exit" << endl;
+    cout << "  your choise : ";
+    cin >> todo;
+
+    if(todo == "3" || todo == "2" || todo == "1" || todo == "9"){
+    if(todo == "3"){
+        system("cls");
+        goto shop;
+        todo.clear();
+    }else if(todo == "2"){
+        system("cls");
+        goto game;
+        todo.clear();
+    }else if(todo == "1"){
+        system("cls");
+        goto weapon;
+        todo.clear();
+    }else if(todo == "9"){
+        todo.clear();name.clear();password.clear();
+        mainMenu();
+    }   
+    }else{todo.clear();system("cls");goto in_game;}
+
+game:
+    if(Exit){goto open;}
+    cout << "\nExplore (max 8 hours)\n";
+    cout << "Mau Explore berapa lama ? : ";
+    cin >> timeExplore; // cin tipe data char, jika bertemu dengan value aneh, akan di konversi menggunakan kode ascii
+
+    if (timeExplore <= 56 && timeExplore >= 49) { // Stamina
+        gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
+        int earn =0;earn=earn+(20*(int)(timeExplore-48));  // buat nampilihn hasil gold yang diperoleh
+        global();cout << endl;
+        cout << "Congratulation ! You have earned " << earn << " gold ! " << endl << endl;
+        //goto weapon;
+        goto in_game;
+    }
+    else if(timeExplore > 56 && timeExplore < 49){
+        system("cls");
+        cout << "Invalid Value !";
+        goto in_game;
+    }
+    else {
+        system("cls");
+        goto in_game;
+    }
+
+shop:
+    Shop();HelpShop();ShopDesc();
+    gotoxy(48,23);cout << " Welcome to Adventure Shop !";
+    gotoxy(46,25);cout << "What item would you like to buy ? ";
+    gotoxy(48,26);cout << "                                   ";
+    gotoxy(46,26);cout << "your answer : ";cin >> belanja;
+    switch(belanja){
+        case '1': // armor 350
+            if(defense==100 && gold >= 350){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your Armor is Already Complete !"<< RESET;}
+            else if(defense <= 99 &&defense>=80 && gold >=350 ){system("cls");success();defense=100;gold-=350;}
+            else if(gold>=350 && defense<80){success();gold-=350;defense+=20;}
+            else if(gold < 350){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
+            break;
+        case '2': // sword 460
+            if(SwordLevel>=7 && gold >= 430){system("cls");success();gotoxy(48,28);SwordLevel+=1;gold-=430;cout<< YELLOW <<"Upgrade Sword Complete !"<< RESET;}
+            else if(SwordLevel < 7 && gold >=430 ){system("cls");gotoxy(48,29);cout << RED << "Your Sword Level is To Low ! (required level 7)" << RESET;}
+            else if(gold < 430){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
+            break;
+        case '3': // hp pot 200
+            if(health==100 && gold >= 200){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your HP is Already Full !"<< RESET;}
+            else if(health <= 99 &&health>=65 && gold >=200 ){system("cls");success();health=100;gold-=200;}
+            else if(gold>=200 && health<65){success();gold-=200;health+=35;}
+            else if(gold < 200){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
+            break;
+        case '4': // energypot
+            if(stamina==100 && gold >=100){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your Stamina is Already Full !"<< RESET;}
+            else if(stamina <= 99 && stamina>=75 && gold >=100){system("cls");success();stamina=100;gold-=100;}
+            else if(stamina < 75 && gold >= 100){success();gold-=100;stamina+=25;}
+            else if(gold < 100){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
+            break;
+        case '9': // back to in game
+            system("cls");
+            goto in_game;
+            break;
+        default:
+            goto shop;
+            break;
+    }
+goto shop;
+
+// if gold is not enough
+invalid:
+    system("cls");
+    cout << "\033[31m Your gold is not Enough !\033[0m";
+    goto weapon;
+
+weapon:
+    cout << endl << "Your current gold : " << gold;
+    cout << endl << "Your current sword level : " << SwordLevel << endl;
+    if(SwordLevel>=7){muncul=true;cout << RED <<"You Need To Buy New Sword in Shop ! \n\n" << RESET;}else{muncul=false;};
+    cout << "Would you like to upgrade your (y/n) :";
+    // health /potion, defense, pedang
+    // switch(){ // equipment
+    //     case '1':
+    //         //goto health;
+    //         break;
+    //     case '2':
+    //         //goto defense
+    //         break;
+    //     case '3';
+    //         //goto sword
+    //         break;
+    // }
+    cin >> up; // items ada 
+
+    if (up == 'y') {
+        cout << endl << "Your current gold : " << gold;
+        cout << endl << "Your current sword : " << SwordLevel << endl;
+        cout << "to upgrade u need : "<< SwordCost1 << endl;
+        cout << "Upgrade sword (y/n) : ";
+        cin >> sword;
+
+        if (gold >= SwordCost1 && sword == 'y') {
+            if(SwordLevel>=7){system("cls");goto weapon;SwordLevel-=1;gold=gold+50+SwordCost1;}
+            else if(SwordLevel<7){SwordLevel += 1;
+                gold = gold - SwordCost1;
+                SwordCost1 += 60;
+                goto weapon;
+            }
+        }
+        else if(gold <= SwordCost1 && sword == 'y'){
+            goto invalid;
+        }
+        else if (sword == 'n') {
+            system("cls");
+            goto in_game;
+        }
+        else{
+            goto in_game;
+        }
+    cout << endl << "Current gold : " << gold << " " << "Current Sword Level : " << SwordLevel << endl; 
+    goto weapon;
+    }
+    else if (up == 'n') {
+        system("cls");
+        goto in_game;
+    }
+    goto in_game;
 
 return 0;
 }
