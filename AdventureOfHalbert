@@ -54,14 +54,14 @@ void gotoxy(int x, int y) {
     bool found = false;
 
 // DEKLARASI IN-GAME
-    int health = 60, gold, defense = 0, SwordLevel = 1;int stamina=0;
+    int health = 60, gold=100000, defense = 0, SwordLevel = 6;int stamina=20;
     int SwordCost1 = 50;int experience=0; // pvp, monster,shop;
     char timeExplore;//hours
     char up;
     char sword;
     string todo;
     bool Exit = false; // untuk bolak baik ke main menu- how to play
-
+    bool muncul=false;
 // Global Loading
 void global(){
     char x = 219;
@@ -389,8 +389,6 @@ void opening(){
     getline(cin,username);
     //HealthBar();
     Loading();
-
-
 }
 //////////////////////////////////////////////////////////////////////////////////////
 int main(){
@@ -457,21 +455,30 @@ shop:
     gotoxy(48,26);cout << "                                   ";
     gotoxy(46,26);cout << "your answer : ";cin >> belanja;
     switch(belanja){
-        case '1':
-
+        case '1': // armor 350
+            if(defense==100 && gold >= 350){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your Armor is Already Complete !"<< RESET;}
+            else if(defense <= 99 &&defense>=80 && gold >=350 ){system("cls");success();defense=100;gold-=350;}
+            else if(gold>=350 && defense<80){success();gold-=350;defense+=20;}
+            else if(gold < 350){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
             break;
-        case '2':
-
+        case '2': // sword 460
+            if(SwordLevel>=7 && gold >= 430){system("cls");success();gotoxy(48,28);SwordLevel+=1;gold-=430;cout<< YELLOW <<"Upgrade Sword Complete !"<< RESET;}
+            else if(SwordLevel < 7 && gold >=430 ){system("cls");gotoxy(48,29);cout << RED << "Your Sword Level is To Low ! (required level 7)" << RESET;}
+            else if(gold < 430){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
             break;
-        case '3':
-            if(health==100 && gold >= 200){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your HP is Already Full !"<< RESET; }
-            else if(health <= 99 &&health>=65 && gold >=200 ){success();health=100;gold-=200;}else if(gold>=200 && health<65){success();gold-=200;health+=35;}
+        case '3': // hp pot 200
+            if(health==100 && gold >= 200){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your HP is Already Full !"<< RESET;}
+            else if(health <= 99 &&health>=65 && gold >=200 ){system("cls");success();health=100;gold-=200;}
+            else if(gold>=200 && health<65){success();gold-=200;health+=35;}
             else if(gold < 200){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
             break;
-        case '4':
-            
+        case '4': // energypot
+            if(stamina==100 && gold >=100){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your Stamina is Already Full !"<< RESET;}
+            else if(stamina <= 99 && stamina>=75 && gold >=100){system("cls");success();stamina=100;gold-=100;}
+            else if(stamina < 75 && gold >= 100){success();gold-=100;stamina+=25;}
+            else if(gold < 100){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
             break;
-        case '9':
+        case '9': // back to in game
             system("cls");
             goto in_game;
             break;
@@ -490,6 +497,7 @@ invalid:
 weapon:
     cout << endl << "Your current gold : " << gold;
     cout << endl << "Your current sword level : " << SwordLevel << endl;
+    if(SwordLevel>=7){muncul=true;cout << RED <<"You Need To Buy New Sword in Shop ! \n\n" << RESET;}else{muncul=false;};
     cout << "Would you like to upgrade your (y/n) :";
     // health /potion, defense, pedang
     // switch(){ // equipment
@@ -513,10 +521,12 @@ weapon:
         cin >> sword;
 
         if (gold >= SwordCost1 && sword == 'y') {
-            SwordLevel += 1;
-            gold = gold - SwordCost1;
-            SwordCost1 += 60;
-            goto weapon;
+            if(SwordLevel>=7){system("cls");goto weapon;SwordLevel-=1;gold=gold+50+SwordCost1;}
+            else if(SwordLevel<7){SwordLevel += 1;
+                gold = gold - SwordCost1;
+                SwordCost1 += 60;
+                goto weapon;
+            }
         }
         else if(gold <= SwordCost1 && sword == 'y'){
             goto invalid;
