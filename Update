@@ -14,6 +14,7 @@
 #include <time.h>
 #include <windows.h>
 #include <iomanip> // menepatkan bar agar tidak geser
+#include <ncurses/curses.h>
 
 // COLORING
 #define RESET "\033[0m"
@@ -47,14 +48,14 @@ void gotoxy(int x, int y) {
     string user[99]={""}; // default
     string pass[99]={""}; // default
     string password;
-    int i=0,j=0;
+    int pemberhentian=0;int i=0,j=0;
 
     char option;char jawaban;char belanja;
-    bool reset = false;
+
     bool found = false;
 
 // DEKLARASI IN-GAME
-    int health = 60, gold=100000, defense = 0, SwordLevel = 6;int stamina=20;
+    int health = 60, gold=100000, defense = 0, SwordLevel = 0;int stamina=20;
     int SwordCost1 = 50;int experience=0; // pvp, monster,shop;
     char timeExplore;//hours
     char up;
@@ -129,7 +130,7 @@ gotoxy(z,i);cout << "    \\__________________________________/";i++;
 }
 
 //Menu login with Boolean
-void login(){
+void login(){name.clear();password.clear(); // found = false; - revisi
     int W=42;int V=7;
 cout << BLUE;
 gotoxy(W,V);cout << "   .'_________________________________________  '." ;V++;
@@ -156,8 +157,7 @@ cout << RESET;
             found = true;
             name.clear();password.clear();
             break;
-        }else if(name == "reset" && password == "reset"){reset=true;return;}
-        else{found=false;}
+        }
         if(!found)
         {   int W=42,V=7;
             system("cls");
@@ -174,8 +174,10 @@ rule(){
 // Registration
 void Register(){
     //rule();
+
     system("cls");
-    int W=42;int V=7;int pemberhentian=0;
+    system("color 07");
+    int W=42;int V=7;
    while(true){
         if(pemberhentian == 1){
             break;
@@ -233,6 +235,40 @@ gotoxy(57+26,i);cout << "| | HP POT can Restore your health up to 35%   | |";i++
 gotoxy(57+26,i);cout << "| | Stamina POT can restore 25 of your stamina | |";i++;
 gotoxy(57+26,i);cout << "(_|____________________________________________|_)";i++;
 }
+
+void Temple(){
+    system("cls");
+    int z=30;int i=0;
+gotoxy(z,i);cout << "                   )\\         O_._._._A_._._._O         /(                    ";i++;
+gotoxy(z,i);cout << "                    \\`--.___,'=================`.___,--'/                     ";i++;
+gotoxy(z,i);cout << "                     \\`--._.__                 __._,--'/                      ";i++;
+gotoxy(z,i);cout << "                       \\  ,. l`~~~~~~~~~~~~~~~'l ,.  /                        ";i++;
+gotoxy(z,i);cout << "           _s_            \\||(_)!_!_!_.-._!_!_!(_)||/            __            ";i++;
+gotoxy(z,i);cout << "           \\`-.__        ||_|____!!_|;|_!!____|_||        __,-'//             ";i++;
+gotoxy(z,i);cout << "            \\    `==---='-----------'='-----------`=---=='    //              ";i++;
+gotoxy(z,i);cout << "            | `--.                                         ,--' |              ";i++;
+gotoxy(z,i);cout << "             \\  ,.`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',.  /              ";i++;
+gotoxy(z,i);cout << "               \\||  ____,-------._,-------._,-------.____  ||/                ";i++;
+gotoxy(z,i);cout << "                ||\\|___!`======= !`======= !`======= !___|/||                 ";i++;
+gotoxy(z,i);cout << "                || |---||--------||-| | |-!!--------||---| ||                  ";i++;
+gotoxy(z,i);cout << "      __O_____O_ll_lO_____O_____O|| |'|'| ||O_____O_____Ol_ll_O_____O__        ";i++;
+gotoxy(z,i);cout << "      o H o o H o o H o o H o o |-----------| o o H o o H o o H o o H o        ";i++;
+gotoxy(z,i);cout << "     ___H_____H_____H_____H____O =========== O____H_____H_____H_____H___       ";i++;
+gotoxy(z,i);cout << "                              /|=============|\\                               ";i++;
+gotoxy(z,i);cout << "    ()______()______()______() '==== +-+ ====' ()______()______()______()      ";i++;
+gotoxy(z,i);cout << "    ||{_}{_}||{_}{_}||{_}{_}/| ===== |_| ===== |\\{_}{_}||{_}{_}||{_}{_}||     ";i++;
+gotoxy(z,i);cout << "    ||      ||      ||     / |==== s(   )s ====| \\     ||      ||      ||     ";i++;
+gotoxy(z,i);cout << "    ======================()  =================  ()======================      ";i++;
+gotoxy(z,i);cout << "    ----------------------/| ------------------- |\\----------------------     ";i++;
+gotoxy(z,i);cout << "                         / |---------------------| \\                          ";i++;
+gotoxy(z,i);cout << "    -'--'--'           ()  '---------------------'  ()                         ";i++;
+gotoxy(z,i);cout << "                       /| ------------------------- |\\    --'--'--'           ";i++; 
+gotoxy(z,i);cout << "           --'--'     / |---------------------------| \\    '--'               ";i++;
+gotoxy(z,i);cout << "                    ()  |___________________________|  ()           '--'-      ";i++;
+gotoxy(z,i);cout << "      --'-          /| _______________________________  |\\                    ";i++;
+gotoxy(z,i);cout << "     --'           / |__________________________________| \\                   ";i++;
+}
+
 
 
 void HelpShop(){
@@ -348,7 +384,7 @@ gotoxy(31,18);cout << "Selamat datang, " << username;
 gotoxy(31,19);cout << "1. Login";
 gotoxy(31,20);cout << "2. Register";
 gotoxy(31,21);cout << "3. How To Play";
-gotoxy(31,22);cout << "4. Exit";
+//gotoxy(31,22);cout << "4. Exit";
 gotoxy(31,24);cout << " your choise : ";
     cin >> option;
 
@@ -359,10 +395,9 @@ gotoxy(31,24);cout << " your choise : ";
         case '2' :
             Register();
             break;
-        case '4' : 
-            Exit=true;
-            return;
-            break;
+        //case '4' : 
+        //    Exit=true;
+        //    break;
         case '3':
             HowToPlay();
         default:
@@ -394,23 +429,17 @@ void opening(){
 //////////////////////////////////////////////////////////////////////////////////////
 int main(){
 
-    system("color 02");
-    opening();
+    //system("color 02");
+    //opening();
 
-open: 
     if(Exit){
-    return 0;
+     return 0;
     }
 
-    if(reset){
-     system("cls");
-     reset = false;
-     mainMenu();
-    }
-
-in_game:
-    if(Exit){goto open;}
-    system("cls");
+    //while true
+    bool Move = true;
+    while(Move){
+    //system("cls");
     barStatus();
     cout << "\n\nHello ! Good Morning, " << username << endl;
     cout << "What would like you in this morning ?" << endl;
@@ -421,147 +450,173 @@ in_game:
     cout << "  your choise : ";
     cin >> todo;
 
-    if(todo == "3" || todo == "2" || todo == "1" || todo == "9"){
-    if(todo == "3"){
-        system("cls");
-        goto shop;
-        todo.clear();
-    }else if(todo == "2"){
-        system("cls");
-        goto game;
-        todo.clear();
-    }else if(todo == "1"){
-        system("cls");
-        goto weapon;
-        todo.clear();
-    }else if(todo == "9"){
-        todo.clear();name.clear();password.clear();
-        mainMenu();
-    }   
-    }else{todo.clear();system("cls");goto in_game;}
-
-game:
-    if(Exit){goto open;}
-    cout << "\nExplore (max 8 hours)\n";
-    cout << "Mau Explore berapa lama ? : ";
-    cin >> timeExplore; // cin tipe data char, jika bertemu dengan value aneh, akan di konversi menggunakan kode ascii
-
-    if (timeExplore <= 56 && timeExplore >= 49) { // Stamina
-        gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
-        int earn =0;earn=earn+(20*(int)(timeExplore-48));  // buat nampilihn hasil gold yang diperoleh
-        global();cout << endl;
-        cout << "Congratulation ! You have earned " << earn << " gold ! " << endl << endl;
-        //goto weapon;
-        goto in_game;
-    }
-    else if(timeExplore > 56 && timeExplore < 49){
-        system("cls");
-        cout << "Invalid Value !";
-        goto in_game;
-    }
-    else {
-        system("cls");
-        goto in_game;
-    }
-
-shop:
-    Shop();HelpShop();ShopDesc();
-    gotoxy(48,23);cout << " Welcome to Adventure Shop !";
-    gotoxy(46,25);cout << "What item would you like to buy ? ";
-    gotoxy(48,26);cout << "                                   ";
-    gotoxy(46,26);cout << "your answer : ";cin >> belanja;
-    switch(belanja){
-        case '1': // armor 350
-            if(defense==100 && gold >= 350){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your Armor is Already Complete !"<< RESET;}
-            else if(defense <= 99 &&defense>=80 && gold >=350 ){system("cls");success();defense=100;gold-=350;}
-            else if(gold>=350 && defense<80){success();gold-=350;defense+=20;}
-            else if(gold < 350){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
-            break;
-        case '2': // sword 460
-            if(SwordLevel>=7 && gold >= 430){system("cls");success();gotoxy(48,28);SwordLevel+=1;gold-=430;cout<< YELLOW <<"Upgrade Sword Complete !"<< RESET;}
-            else if(SwordLevel < 7 && gold >=430 ){system("cls");gotoxy(48,29);cout << RED << "Your Sword Level is To Low ! (required level 7)" << RESET;}
-            else if(gold < 430){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
-            break;
-        case '3': // hp pot 200
-            if(health==100 && gold >= 200){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your HP is Already Full !"<< RESET;}
-            else if(health <= 99 &&health>=65 && gold >=200 ){system("cls");success();health=100;gold-=200;}
-            else if(gold>=200 && health<65){success();gold-=200;health+=35;}
-            else if(gold < 200){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
-            break;
-        case '4': // energypot
-            if(stamina==100 && gold >=100){system("cls");gotoxy(48,28);cout<< YELLOW <<"Your Stamina is Already Full !"<< RESET;}
-            else if(stamina <= 99 && stamina>=75 && gold >=100){system("cls");success();stamina=100;gold-=100;}
-            else if(stamina < 75 && gold >= 100){success();gold-=100;stamina+=25;}
-            else if(gold < 100){system("cls");gotoxy(48,28);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
-            break;
-        case '9': // back to in game
-            system("cls");
-            goto in_game;
-            break;
-        default:
-            goto shop;
-            break;
-    }
-goto shop;
-
-// if gold is not enough
-invalid:
+    if(todo == "1" || todo == "2" || todo == "3" || todo == "9")
+    {
     system("cls");
-    cout << "\033[31m Your gold is not Enough !\033[0m";
-    goto weapon;
+    if(todo == "1")
+        {
+            Temple();
+            cout << endl << "Your current gold : " << gold;
+            cout << endl << "Your current sword level : " << SwordLevel << endl;
+            if(SwordLevel>=7){muncul=true;cout << RED <<"You Need To Buy New Sword in Shop ! \n\n" << RESET;}else{muncul=false;};
+            cout << "Would you like to upgrade your (y/n) :";
+            // health /potion, defense, pedang
+            // switch(){ // equipment
+            //     case '1':
+            //         //goto health;
+            //         break;
+            //     case '2':
+            //         //goto defense
+            //         break;
+            //     case '3';
+            //         //goto sword
+            //         break;
+            // }
+            cin >> up; // items ada 
 
-weapon:
-    cout << endl << "Your current gold : " << gold;
-    cout << endl << "Your current sword level : " << SwordLevel << endl;
-    if(SwordLevel>=7){muncul=true;cout << RED <<"You Need To Buy New Sword in Shop ! \n\n" << RESET;}else{muncul=false;};
-    cout << "Would you like to upgrade your (y/n) :";
-    // health /potion, defense, pedang
-    // switch(){ // equipment
-    //     case '1':
-    //         //goto health;
-    //         break;
-    //     case '2':
-    //         //goto defense
-    //         break;
-    //     case '3';
-    //         //goto sword
-    //         break;
-    // }
-    cin >> up; // items ada 
+            if (up == 'y') {
+            // system("cls");
+            // barStatus();
+            cout << endl << "Your current gold : " << gold;
+            cout << endl << "Your current sword : " << SwordLevel << endl;
+            cout << "to upgrade u need : "<< SwordCost1 << endl;
+            cout << "Upgrade sword (y/n) : ";
+            cin >> sword;
 
-    if (up == 'y') {
-        cout << endl << "Your current gold : " << gold;
-        cout << endl << "Your current sword : " << SwordLevel << endl;
-        cout << "to upgrade u need : "<< SwordCost1 << endl;
-        cout << "Upgrade sword (y/n) : ";
-        cin >> sword;
+                if (gold >= SwordCost1 && sword == 'y'){
+                    if(SwordLevel>=7){
+                        system("cls");
+                        SwordLevel-=1;
+                        gold=gold+50+SwordCost1;
+                    }
+                    else if(SwordLevel<7){
+                        SwordLevel += 1;
+                        gold = gold - SwordCost1;
+                        SwordCost1 += 60;
+                    }
+                }
 
-        if (gold >= SwordCost1 && sword == 'y') {
-            if(SwordLevel>=7){system("cls");goto weapon;SwordLevel-=1;gold=gold+50+SwordCost1;}
-            else if(SwordLevel<7){SwordLevel += 1;
-                gold = gold - SwordCost1;
-                SwordCost1 += 60;
-                goto weapon;
+                else if(gold < SwordCost1 && sword == 'y'){
+                    system("cls");
+                    cout << "\033[31m Your gold is not Enough !\033[0m";
+                }
+                else if (sword == 'n'){
+                    system("cls");
+                    //break;
+                }
+                else{
+                    //break;
+                }
+                //cout << endl << "Current gold        : " << gold << " " << "\nCurrent Sword Level : " << SwordLevel << endl; 
             }
-        }
-        else if(gold <= SwordCost1 && sword == 'y'){
-            goto invalid;
-        }
-        else if (sword == 'n') {
-            system("cls");
-            goto in_game;
-        }
-        else{
-            goto in_game;
-        }
-    cout << endl << "Current gold : " << gold << " " << "Current Sword Level : " << SwordLevel << endl; 
-    goto weapon;
-    }
-    else if (up == 'n') {
+            else if (up == 'n') {
+                system("cls");
+                //break;
+            } 
+
+        global();
         system("cls");
-        goto in_game;
+        Temple();
+        cout << endl << "Current gold        : " << gold << " " << "\nCurrent Sword Level : " << SwordLevel << endl; 
+        system("pause");
+        system("cls");  
+        }
+
+
+    //game:
+    else if(todo == "2")
+        {
+            
+            cout << "\nExplore (max 8 hours)\n";
+            cout << "Mau Explore berapa lama ? : ";
+            cin >> timeExplore; // cin tipe data char, jika bertemu dengan value aneh, akan di konversi menggunakan kode ascii
+
+            if(timeExplore <= 0){
+                timeExplore = (int)(timeExplore);
+                timeExplore-=100000;
+            }
+
+            if (timeExplore <= 56 && timeExplore >= 49) {   // Stamina
+                gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
+                int earn =0;earn=earn+(20*(int)(timeExplore-48)); // buat nampilihn hasil gold yang diperoleh
+                global();cout << endl;
+                cout << "Congratulation ! You have earned " << earn << " gold ! " << endl << endl;
+                //goto weapon;
+                //break;//goto in_game;
+            }
+            else if(timeExplore < -99999){
+                //break;
+            }
+            else if(timeExplore > 56 && timeExplore < 49){
+                system("cls");
+                cout << "Invalid Value !";
+                //break;//goto game;
+            }
+            else {
+                system("cls");
+                //break;//goto game;
+            }
+
+        }
+        
+    else if(todo == "3"){
+        Move = false;
+        //shop:
+        while(!Move)
+        {
+        Shop();HelpShop();ShopDesc();
+        gotoxy(48,23);cout << " Welcome to Adventure Shop !";
+        gotoxy(46,25);cout << "What item would you like to buy ? ";
+        gotoxy(48,26);cout << "                                   ";
+        gotoxy(46,26);cout << "your answer : ";cin >> belanja;
+        switch(belanja){
+            case '1': // armor 350
+                if(defense==100 && gold >= 350){system("cls");gotoxy(48,29);cout<< YELLOW <<"Your Armor is Already Complete !"<< RESET;}
+                else if(defense <= 99 &&defense>=80 && gold >=350 ){system("cls");success();defense=100;gold-=350;}
+                else if(gold>=350 && defense<80){success();gold-=350;defense+=20;}
+                else if(gold < 350){system("cls");gotoxy(48,29);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
+                break;
+            case '2': // sword 460
+                if(SwordLevel>=7 && gold >= 430){system("cls");success();gotoxy(48,29);SwordLevel+=1;gold-=430;cout<< YELLOW <<"Upgrade Sword Complete !"<< RESET;}
+                else if(SwordLevel < 7 && gold >=430 ){system("cls");gotoxy(48,29);cout << RED << "Your Sword Level is To Low ! (required level 7)" << RESET;}
+                else if(gold < 430){system("cls");gotoxy(48,29);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
+                break;
+            case '3': // hp pot 200
+                if(health==100 && gold >= 200){system("cls");gotoxy(48,29);cout<< YELLOW <<"Your HP is Already Full !"<< RESET;}
+                else if(health <= 99 &&health>=65 && gold >=200 ){system("cls");success();health=100;gold-=200;}
+                else if(gold>=200 && health<65){success();gold-=200;health+=35;}
+                else if(gold < 200){system("cls");gotoxy(48,29);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
+                break;
+            case '4': // energypot
+                if(stamina==100 && gold >=100){system("cls");gotoxy(48,29);cout<< YELLOW <<"Your Stamina is Already Full !"<< RESET;}
+                else if(stamina <= 99 && stamina>=75 && gold >=100){system("cls");success();stamina=100;gold-=100;}
+                else if(stamina < 75 && gold >= 100){success();gold-=100;stamina+=25;}
+                else if(gold < 100){system("cls");gotoxy(48,29);cout<< RED <<"Your Gold is Not Enough !"<< RESET;}
+                break;
+            case '9': // back to in game
+                system("cls");
+                Move = true;
+                //goto in_game;
+                break;
+            default:
+                //goto shop;
+                break;
+        }
+        //system("cls");
+        //break; // back to main menu.
+        //goto shop;
+        }
     }
-    goto in_game;
+
+    else if(todo == "9"){
+        Move = false;
+    }
+    
+    }
+    else{
+        todo.clear();
+        system("cls");}//goto in_game;}
+    }// punya while
 
 return 0;
 }
