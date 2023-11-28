@@ -275,7 +275,7 @@ gotoxy(z,i);cout << "     --'           / |__________________________________| \
 
 void Monster(){
 int z=67;int i=12;
-cout << GREEN;
+cout << RED;
 gotoxy(z,i);cout << "_        __                    ";i++;
 gotoxy(z,i);cout << "       o)/)_    /  \\_         ";i++;
 gotoxy(z,i);cout << "   o^^^  _  \\  /     \\       ";i++;
