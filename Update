@@ -64,6 +64,8 @@ void gotoxy(int x, int y) {
     bool Exit = false; // untuk bolak baik ke main menu- how to plays
     bool muncul=false; // ngeliatain kalo udah max sword 
     bool warna; // warna temple
+
+    int N; // lama berperang;
 // Global Loading
 void global(){
     char x = 219;
@@ -73,7 +75,8 @@ void global(){
 }
 // Global Loading
 
-void HealthBar(){
+int dmg;
+int HealthBar(int dmg){
     for(int i=30;i>0;i--){
         char x=219; 
         if(i >= 22){
@@ -282,10 +285,12 @@ gotoxy(z,i);cout << "     --'           / |__________________________________| \
 cout << RESET;
 }
 
-
-void Monster(){
+int Monster(int N){
 int z=67;int i=12;
+N = N - 47;
 cout << RED;
+
+while(N > 0){
 gotoxy(z,i);cout << "_        __                    ";i++;
 gotoxy(z,i);cout << "       o)/)_    /  \\_         ";i++;
 gotoxy(z,i);cout << "   o^^^  _  \\  /     \\       ";i++;
@@ -303,16 +308,23 @@ gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
     for(int j=1;j<=4;i++){
     // x=38,y=21,
     gotoxy(x,y);cout << " O ";
+    Sleep(300);
+    gotoxy(x,y);cout << "   ";
     x-=3;
     y++;
-    Sleep(220);
+    Sleep(300);
     if(y==21)
     {
         break;
     }
 }
+
+N--;
+if(N<=1){break;};
+};
 cout << RESET;
 
+return N;
 }
 
 void Helbert(){
@@ -591,13 +603,14 @@ int main(){
                 timeExplore = (int)(timeExplore);
                 timeExplore-=100000;
             }
+            N = timeExplore;
 
             if (timeExplore <= 56 && timeExplore >= 49) {   // Stamina
                 gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
                 int earn =0;earn=earn+(20*(int)(timeExplore-48)); // buat nampilihn hasil gold yang diperoleh
 
         Helbert();
-        Monster();
+        Monster(N);
         //HealthBar();
         //global();
                 cout << endl;
