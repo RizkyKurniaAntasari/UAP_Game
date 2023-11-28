@@ -61,8 +61,9 @@ void gotoxy(int x, int y) {
     char up;
     char sword;
     string todo;
-    bool Exit = false; // untuk bolak baik ke main menu- how to play
-    bool muncul=false;
+    bool Exit = false; // untuk bolak baik ke main menu- how to plays
+    bool muncul=false; // ngeliatain kalo udah max sword 
+    bool warna; // warna temple
 // Global Loading
 void global(){
     char x = 219;
@@ -240,9 +241,15 @@ gotoxy(57+26,i);cout << "(_|____________________________________________|_)";i++
         B A T T L E    F I E L D
 */
 
-void Temple(){
+int Temple(bool warna = false){
     system("cls");
     int z=30;int i=0;
+if(!warna){
+    cout << RED;
+}
+else if(warna){
+    cout << GREEN;
+}
 gotoxy(z,i);cout << "                   )\\         O_._._._A_._._._O         /(                    ";i++;
 gotoxy(z,i);cout << "                    \\`--.___,'=================`.___,--'/                     ";i++;
 gotoxy(z,i);cout << "                     \\`--._.__                 __._,--'/                      ";i++;
@@ -271,6 +278,8 @@ gotoxy(z,i);cout << "           --'--'     / |---------------------------| \\   
 gotoxy(z,i);cout << "                    ()  |___________________________|  ()           '--'-      ";i++;
 gotoxy(z,i);cout << "      --'-          /| _______________________________  |\\                    ";i++;
 gotoxy(z,i);cout << "     --'           / |__________________________________| \\                   ";i++;
+
+cout << RESET;
 }
 
 void Monster(){
@@ -287,7 +296,18 @@ gotoxy(z,i);cout << "           /     \\  !/     .  ";i++;
 gotoxy(z,i);cout << "          ( /_    \\_      _/) ";i++;
 gotoxy(z,i);cout << "         _)\\ ^-_  ^^--^^ /    ";i++;
 gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
+
+
 cout << RESET;
+
+}
+
+void Helbert(){
+    
+int z=37;int i=20;
+gotoxy(z,i);cout << "   .|.   o  /\\   ";i++;
+gotoxy(z,i);cout << "   -|- / | `)o    ";i++;
+gotoxy(z,i);cout << "        / \\ \\/  ";i++;
 
 }
 
@@ -476,7 +496,7 @@ int main(){
     system("cls");
     if(todo == "1")
         {
-            Temple();
+            Temple(warna = false);
             cout << endl << "Your current gold : " << gold;
             cout << endl << "Your current sword level : " << SwordLevel << endl;
             if(SwordLevel>=7){muncul=true;cout << RED <<"You Need To Buy New Sword in Shop ! \n\n" << RESET;}else{muncul=false;};
@@ -534,19 +554,21 @@ int main(){
                 system("cls");
                 //break;
             } 
-
+        if(up == 'y'){
         global();
         system("cls");
-        Temple();
+        Temple(warna = true);
         cout << endl << "Current gold        : " << gold << " " << "\nCurrent Sword Level : " << SwordLevel << endl; 
         system("pause");
         system("cls");  
+        }
         }
 
 
     //game:
     else if(todo == "2")
         {
+            Helbert();
             Monster();
             cout << "\nExplore (max 8 hours)\n";
             cout << "Mau Explore berapa lama ? : ";
@@ -562,6 +584,7 @@ int main(){
                 int earn =0;earn=earn+(20*(int)(timeExplore-48)); // buat nampilihn hasil gold yang diperoleh
                 global();cout << endl;
                 cout << "Congratulation ! You have earned " << earn << " gold ! " << endl << endl;
+                system("pause");
                 //goto weapon;
                 //break;//goto in_game;
             }
@@ -578,6 +601,8 @@ int main(){
                 //break;//goto game;
             }
 
+
+        system("cls");
         }
         
     else if(todo == "3"){
