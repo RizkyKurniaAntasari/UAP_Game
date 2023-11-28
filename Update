@@ -282,6 +282,7 @@ gotoxy(z,i);cout << "     --'           / |__________________________________| \
 cout << RESET;
 }
 
+
 void Monster(){
 int z=67;int i=12;
 cout << RED;
@@ -297,7 +298,19 @@ gotoxy(z,i);cout << "          ( /_    \\_      _/) ";i++;
 gotoxy(z,i);cout << "         _)\\ ^-_  ^^--^^ /    ";i++;
 gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
 
+    int x=66,y=15;
 
+    for(int j=1;j<=4;i++){
+    // x=38,y=21,
+    gotoxy(x,y);cout << " O ";
+    x-=3;
+    y++;
+    Sleep(220);
+    if(y==21)
+    {
+        break;
+    }
+}
 cout << RESET;
 
 }
@@ -568,8 +581,8 @@ int main(){
     //game:
     else if(todo == "2")
         {
-            Helbert();
-            Monster();
+//            Helbert();
+//            Monster();
             cout << "\nExplore (max 8 hours)\n";
             cout << "Mau Explore berapa lama ? : ";
             cin >> timeExplore; // cin tipe data char, jika bertemu dengan value aneh, akan di konversi menggunakan kode ascii
@@ -582,7 +595,12 @@ int main(){
             if (timeExplore <= 56 && timeExplore >= 49) {   // Stamina
                 gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
                 int earn =0;earn=earn+(20*(int)(timeExplore-48)); // buat nampilihn hasil gold yang diperoleh
-                global();cout << endl;
+
+        Helbert();
+        Monster();
+        //HealthBar();
+        //global();
+                cout << endl;
                 cout << "Congratulation ! You have earned " << earn << " gold ! " << endl << endl;
                 system("pause");
                 //goto weapon;
