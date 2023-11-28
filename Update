@@ -236,6 +236,10 @@ gotoxy(57+26,i);cout << "| | Stamina POT can restore 25 of your stamina | |";i++
 gotoxy(57+26,i);cout << "(_|____________________________________________|_)";i++;
 }
 
+/*
+        B A T T L E    F I E L D
+*/
+
 void Temple(){
     system("cls");
     int z=30;int i=0;
@@ -269,6 +273,23 @@ gotoxy(z,i);cout << "      --'-          /| _______________________________  |\\
 gotoxy(z,i);cout << "     --'           / |__________________________________| \\                   ";i++;
 }
 
+void Monster(){
+int z=67;int i=12;
+cout << GREEN;
+gotoxy(z,i);cout << "_        __                    ";i++;
+gotoxy(z,i);cout << "       o)/)_    /  \\_         ";i++;
+gotoxy(z,i);cout << "   o^^^  _  \\  /     \\       ";i++;
+gotoxy(z,i);cout << "   'v!!!' !  \\/   !   \\      ";i++;
+gotoxy(z,i);cout << "       ___/ ) ' _/  !  !       ";i++;
+gotoxy(z,i);cout << "      (/^==/    /!_ /. !       ";i++;
+gotoxy(z,i);cout << "           !__  \\  !/ /       ";i++;
+gotoxy(z,i);cout << "           /     \\  !/     .  ";i++;
+gotoxy(z,i);cout << "          ( /_    \\_      _/) ";i++;
+gotoxy(z,i);cout << "         _)\\ ^-_  ^^--^^ /    ";i++;
+gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
+cout << RESET;
+
+}
 
 
 void HelpShop(){
@@ -526,7 +547,7 @@ int main(){
     //game:
     else if(todo == "2")
         {
-            
+            Monster();
             cout << "\nExplore (max 8 hours)\n";
             cout << "Mau Explore berapa lama ? : ";
             cin >> timeExplore; // cin tipe data char, jika bertemu dengan value aneh, akan di konversi menggunakan kode ascii
