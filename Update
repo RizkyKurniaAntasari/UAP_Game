@@ -285,13 +285,37 @@ gotoxy(z,i);cout << "     --'           / |__________________________________| \
 cout << RESET;
 }
 
-int Monster(int N){
-int z=67;int i=9+6+2;
-N = N - 47;
+void Dataran(){
+    int z=0;
+    int i=24;                                                                                                  
+gotoxy(z,i);cout << "~~^ ~~^-~^_~^~/  \\~^-~^~_~                                               \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~^~-^~_^~~-^~_~^~-~_~-^~_^/  -~^_~^~/  \\~^-~^~_ ";i++;
+gotoxy(z,i);cout << "~ _~~- ~~^-~^_~^~/  \\~^-~^~_~_~                                       - ^~_^-^~~_ -~^_ -~_-~~^- _~~^~-^~_^~~-^~_~^~-~_~-^~_^/  -~^_~^~/  \\~^-~^~";i++;
+gotoxy(z,i);cout << "~ ^- ~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~                      ~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-   _~~_-  ~~ _ ~  ^~  - ~~^ -~_-~~^- ";i++;
+gotoxy(z,i);cout << "~-  ^_  ~^ -  ^~ _ - ~^~ _   _~^~-  _ ~~^ - _ ~ - _ ~~^ -      ~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/  ~~^-~^_~^~/  \\~^-~^~_~^-~_^~";i++;
+gotoxy(z,i);cout << "~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/  ~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/  ~^ -_ ~^^ -_ ~ _ - _ ~^~-  _~ -_   ~ ";i++;
+gotoxy(z,i);cout << "~~^-~^_~^~/ ~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/    \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/ ~^~ - _ ^ - ~~~ _ - _ ~-^ ~ __- ~~   ";i++;
+gotoxy(z,i);cout << "~~^-~^_~^~/  \\~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/     ~ ~- ^~ -  ~^ -  ~ ^~ - ~~  ^~ - ~\\~^-~^~_~^-~\\~^-~^~_~^-~ -~_-~~^- _~~_~-^";i++;
 
+}
+
+void Helbert(){ 
+int z=37;int i=17+1+6;
+cout << GREEN;
+gotoxy(z,i);cout << "   .|.   o  /\\   ";i++;
+gotoxy(z,i);cout << "   -|- / | `)o    ";i++;
+gotoxy(z,i);cout << "        / \\ \\/  ";i++;
+cout << RESET;
+
+}
+
+int Monster(int N){
+int z=67;int i=9+6+1;
+N = N - 47;
 
 while(N > 0){
     barStatus();
+    Dataran();
+    Helbert();
     cout << RED;
 gotoxy(z,i);cout << "_        __                    ";i++;
 gotoxy(z,i);cout << "       o)/)_    /  \\_         ";i++;
@@ -305,7 +329,7 @@ gotoxy(z,i);cout << "          ( /_    \\_      _/) ";i++;
 gotoxy(z,i);cout << "         _)\\ ^-_  ^^--^^ /    ";i++;
 gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
 
-    int x=66,y=12+2+6;int p=0;
+    int x=66,y=12+1+6;int p=0;
     for(int j=1;j<=4;i++){
     // x=38,y=21,
     gotoxy(x,y);cout << " O ";
@@ -314,37 +338,26 @@ gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
     x-=3;
     y++;
     Sleep(300);
-    if(y==21-1+6)
+    if(y==21+4)
     {
         break;
     }
     p++;
-}   health-=14;
+}   health-=91;
 
     if(p==1){
-        int x=66,y=12+6+2;
+        int x=66,y=12+6+1;
     }
 
 N--;
 if(N<=1){break;};
-z=67,i=9+2+6;
+z=67,i=9+1+6;
 
 };barStatus();
 cout << RESET;
 
 return N;
 }
-
-void Helbert(){ 
-int z=37;int i=17+2+6;
-cout << GREEN;
-gotoxy(z,i);cout << "   .|.   o  /\\   ";i++;
-gotoxy(z,i);cout << "   -|- / | `)o    ";i++;
-gotoxy(z,i);cout << "        / \\ \\/  ";i++;
-cout << RESET;
-
-}
-
 
 void HelpShop(){
     int z=1;int i=16;
@@ -618,7 +631,6 @@ int main(){
                 gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
                 int earn =0;earn=earn+(20*(int)(timeExplore-48)); // buat nampilihn hasil gold yang diperoleh
 
-        Helbert();
         Monster(N);
         //HealthBar();
         //global();
