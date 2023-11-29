@@ -55,7 +55,7 @@ void gotoxy(int x, int y) {
     bool found = false;
 
 // DEKLARASI IN-GAME
-    int health = 60, gold=100000, defense = 0, SwordLevel = 0;int stamina=20;
+    int health = 1000, gold=100000, defense = 0, SwordLevel = 0;int stamina=20;
     int SwordCost1 = 50;int experience=0; // pvp, monster,shop;
     char timeExplore;//hours
     char up;
@@ -286,11 +286,13 @@ cout << RESET;
 }
 
 int Monster(int N){
-int z=67;int i=12;
+int z=67;int i=9+6+2;
 N = N - 47;
-cout << RED;
+
 
 while(N > 0){
+    barStatus();
+    cout << RED;
 gotoxy(z,i);cout << "_        __                    ";i++;
 gotoxy(z,i);cout << "       o)/)_    /  \\_         ";i++;
 gotoxy(z,i);cout << "   o^^^  _  \\  /     \\       ";i++;
@@ -303,8 +305,7 @@ gotoxy(z,i);cout << "          ( /_    \\_      _/) ";i++;
 gotoxy(z,i);cout << "         _)\\ ^-_  ^^--^^ /    ";i++;
 gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
 
-    int x=66,y=15;
-
+    int x=66,y=12+2+6;int p=0;
     for(int j=1;j<=4;i++){
     // x=38,y=21,
     gotoxy(x,y);cout << " O ";
@@ -313,26 +314,34 @@ gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
     x-=3;
     y++;
     Sleep(300);
-    if(y==21)
+    if(y==21-1+6)
     {
         break;
     }
-}
+    p++;
+}   health-=14;
+
+    if(p==1){
+        int x=66,y=12+6+2;
+    }
 
 N--;
 if(N<=1){break;};
-};
+z=67,i=9+2+6;
+
+};barStatus();
 cout << RESET;
 
 return N;
 }
 
-void Helbert(){
-    
-int z=37;int i=20;
+void Helbert(){ 
+int z=37;int i=17+2+6;
+cout << GREEN;
 gotoxy(z,i);cout << "   .|.   o  /\\   ";i++;
 gotoxy(z,i);cout << "   -|- / | `)o    ";i++;
 gotoxy(z,i);cout << "        / \\ \\/  ";i++;
+cout << RESET;
 
 }
 
