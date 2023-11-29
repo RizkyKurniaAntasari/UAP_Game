@@ -518,7 +518,7 @@ void opening(){
 int main(){
 
     //system("color 02");
-    //opening();
+    opening();
 
     if(Exit){
      return 0;
