@@ -1,4 +1,4 @@
-/*  ini pepek 
+/*  
     NAMA KELOMPOK : NPM
     BUNGARAN NATANAEL SIAHAAN : 2317051048
     DEA DELVINATA             : 2317051027
