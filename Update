@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <iomanip> // menepatkan bar agar tidak geser
 #include <ncurses/curses.h>
+#include <unistd.h>
 
 // COLORING
 #define RESET "\033[0m"
@@ -483,23 +484,43 @@ gotoxy(31,24);cout << " your choise : ";
 }
 
 // Loading for Main Menu
-void Loading(){
-    char x = 219;
-    for(int i=0;i<=27;i++){
-        Sleep(90);
-        cout << x;
+void LoadingAnimation() {
+    initscr(); // Inisialisasi mode Ncurses
+    curs_set(0); // hide kursor
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x); // Dapatkan max layar
+
+    int total_time = 2100; // Total waktu loading
+    int delay = total_time / 50; // Delay per iterasi (total iterasi = 50)
+    int num_frames = 4; // Jumlah frame animasi
+    char frames[] = {'|', '/', '-', '\\'}; // Frame animasi
+
+    for (int i = 0; i < 50; ++i) {
+        // Tampilkan frame animasi pada posisi tengah layar
+        mvprintw(max_y / 2 - 1, (max_x - 1) / 2, "%c", frames[i % num_frames]);
+
+        // Tampilkan persentase loading
+        mvprintw(max_y / 2, (max_x - 12) / 2, "Loading... %d%%", (i + 1) * 2);
+
+        refresh(); // Refresh layar
+
+        // nunggu 
+        napms(delay);
+
+        // hapus frame dan persentase sebelumnya
+        mvprintw(max_y / 2 - 1, (max_x - 1) / 2, " ");
+        mvprintw(max_y / 2, (max_x - 12) / 2, "            ");
     }
-    system("cls");
+    endwin(); // selesai
     HowToPlay();
     mainMenu();
 }
 
-//Take your user name 
 void opening(){
 //  cout << " Selamat datang di game advanture !\n\n ";
     cout << " Insert your name : ";
     getline(cin,username);
-    Loading();
+    LoadingAnimation();
 }
 //////////////////////////////////////////////////////////////////////////////////////
 int main(){
