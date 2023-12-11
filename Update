@@ -270,7 +270,7 @@ while(stopSlash < 4){
 
     for(int i = 0; i <= 4; i++){
     gotoxy(a+1,b+1); cout << ">>--->" ;
-        Sleep(500);
+        Sleep(400);
     gotoxy(a+1,b+1); cout << "      " ;
         a+=6;
         b = 23;
@@ -334,7 +334,6 @@ gotoxy(z,i);cout << "        'v--^    ^^-----^^     ";i++;
 }   
     health-=91;
     stamina-=10;
-    experience+=187;
     if(health<=0){ // jika health kurang dari atau sama dengan 0, maka akan Game Over.
         break;
     }
@@ -587,9 +586,9 @@ int main(){
 
         Monster(N);
         Slash();
-     
                 gold = gold + (20*(int)(timeExplore-48)); // ((int)(timeExplore)) => mengubah nilai 'char' menjadi kode ascii type data int
-                gotoxy(0,20);cout << "Congratulation ! You have earned " << earn << " gold ! " << endl;
+                gotoxy(0,20);cout << "Congratulation ! You have earned " << earn << " gold and " << "187 EXP !" << endl;
+                experience+=187;
                 system("pause");
             }
             else if(timeExplore < -99999){
